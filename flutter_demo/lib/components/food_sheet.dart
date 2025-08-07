@@ -113,6 +113,7 @@ class _FoodSheetState extends State<FoodSheet> {
                 label: 'Settings',
                 textColor: Colors.white,
                 onPressed: () {
+                  // Open app settings to manually grant permissions
                   _openAppSettings();
                 },
               ),
