@@ -43,7 +43,11 @@ class _FoodSheetState extends State<FoodSheet> {
         return AlertDialog(
           title: Text(
             'Select Image Source',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor),
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: primaryColor,
+            ),
           ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
@@ -109,7 +113,6 @@ class _FoodSheetState extends State<FoodSheet> {
                 label: 'Settings',
                 textColor: Colors.white,
                 onPressed: () {
-                  // Open app settings to manually grant permissions
                   _openAppSettings();
                 },
               ),
