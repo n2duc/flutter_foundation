@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/bloc/cart/cart_bloc.dart';
-import 'package:flutter_demo/bloc/cart/cart_event.dart';
 import 'package:flutter_demo/bloc/cart/cart_state.dart';
+import 'package:flutter_demo/cart/ui/cubit/cart_cubit.dart';
 import 'package:flutter_demo/models/cart_item.dart';
 import 'package:flutter_demo/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +24,7 @@ class CartPage extends StatelessWidget {
         foregroundColor: Colors.white,
         elevation: 0,
         actions: [
-          BlocBuilder<CartBloc, CartState>(
+          BlocBuilder<CartCubit, CartState>(
             builder: (context, state) {
               if (state is CartLoaded && state.items.isNotEmpty) {
                 return IconButton(
@@ -40,7 +39,7 @@ class CartPage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<CartBloc, CartState>(
+      body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           if (state is CartInitial) {
             return const Center(child: CircularProgressIndicator());
@@ -157,15 +156,13 @@ class CartPage extends StatelessWidget {
             children: [
               _buildQuantityButton(context, Icons.remove, () {
                 if (cartItem.quantity > 1) {
-                  context.read<CartBloc>().add(
-                    UpdateFoodQuantity(
-                      foodId: cartItem.food.name,
-                      quantity: cartItem.quantity - 1,
-                    ),
+                  context.read<CartCubit>().updateFoodQuantity(
+                    cartItem.food.name,
+                    cartItem.quantity - 1,
                   );
                 } else {
-                  context.read<CartBloc>().add(
-                    RemoveFoodFromCart(foodId: cartItem.food.name),
+                  context.read<CartCubit>().removeFoodFromCart(
+                    cartItem.food.name,
                   );
                 }
               }),
@@ -181,11 +178,9 @@ class CartPage extends StatelessWidget {
                 ),
               ),
               _buildQuantityButton(context, Icons.add, () {
-                context.read<CartBloc>().add(
-                  UpdateFoodQuantity(
-                    foodId: cartItem.food.name,
-                    quantity: cartItem.quantity + 1,
-                  ),
+                context.read<CartCubit>().updateFoodQuantity(
+                  cartItem.food.name,
+                  cartItem.quantity + 1,
                 );
               }),
             ],
@@ -266,6 +261,7 @@ class CartPage extends StatelessWidget {
   }
 
   void _showClearCartDialog(BuildContext context) {
+    final theme = Theme.of(context);
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -282,10 +278,10 @@ class CartPage extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.read<CartBloc>().add(const ClearCart());
+                context.read<CartCubit>().clearCart();
                 Navigator.of(context).pop();
               },
-              child: Text('Clear', style: TextStyle(color: primaryColor)),
+              child: Text('Clear', style: TextStyle(color: theme.primaryColor)),
             ),
           ],
         );
@@ -306,7 +302,7 @@ class CartPage extends StatelessWidget {
           actions: [
             TextButton(
               onPressed: () {
-                context.read<CartBloc>().add(const ClearCart());
+                context.read<CartCubit>().clearCart();
                 Navigator.of(context).pop();
                 Navigator.of(context).pop(); // Go back to previous screen
               },

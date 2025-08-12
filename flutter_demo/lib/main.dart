@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/bloc/cart/cart_bloc.dart';
+import 'package:flutter_demo/cart/ui/cubit/cart_cubit.dart';
 import 'package:flutter_demo/models/food.dart';
 import 'package:flutter_demo/pages/about_page.dart';
 import 'package:flutter_demo/pages/cart_page.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => CartBloc(),
+      create: (_) => CartCubit(),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: _router,

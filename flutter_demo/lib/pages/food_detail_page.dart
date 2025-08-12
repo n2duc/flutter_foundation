@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_demo/bloc/cart/cart_bloc.dart';
-import 'package:flutter_demo/bloc/cart/cart_event.dart';
+import 'package:flutter_demo/cart/ui/cubit/cart_cubit.dart';
 import 'package:flutter_demo/models/food.dart';
 import 'package:flutter_demo/pages/cart_page.dart';
 import 'package:flutter_demo/theme/colors.dart';
@@ -46,9 +45,7 @@ class _FoodDetailPageState extends State<FoodDetailPage> {
   }
 
   void _addToCart() {
-    context.read<CartBloc>().add(
-      AddFoodToCart(food: widget.food, quantity: quantity),
-    );
+    context.read<CartCubit>().addFoodToCart(widget.food, quantity);
 
     // Navigate to cart page
     Navigator.push(
