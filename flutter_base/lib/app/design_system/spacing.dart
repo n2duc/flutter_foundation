@@ -7,6 +7,7 @@ class RFXSpacing {
   static const double spacing12 = 12;
   static const double spacing14 = 14;
   static const double spacing16 = 16;
+  static const double spacing18 = 18;
   static const double spacing20 = 20;
   static const double spacing24 = 24;
   static const double spacing28 = 28;

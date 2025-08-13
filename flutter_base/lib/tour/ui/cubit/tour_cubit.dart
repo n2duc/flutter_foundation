@@ -20,7 +20,12 @@ class TourCubit extends Cubit<TourState> {
       emit(TourState.success(tours: tours));
     } catch (error, stackTrace) {
       log.severe('Error while trying to load TourCubit', error, stackTrace);
-      emit(const TourState.error());
+      emit(
+        const TourState.error(
+          errorMessage:
+              'Somthing went wrong. Please check your internet connection and try again.',
+        ),
+      );
     }
   }
 }
@@ -32,5 +37,6 @@ sealed class TourState with _$TourState {
   const factory TourState.success({required List<TourData> tours}) =
       TourStateSuccess;
 
-  const factory TourState.error() = TourStateError;
+  const factory TourState.error({required String errorMessage}) =
+      TourStateError;
 }

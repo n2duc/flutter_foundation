@@ -29,6 +29,9 @@ class RFXPrimaryButton extends StatelessWidget {
           fixedSize: Size.fromHeight(_height),
           backgroundColor: theme.colorScheme.primary,
           foregroundColor: theme.colorScheme.onPrimary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12.0),
+          ),
         ),
       ),
       child: FilledButton(onPressed: onPressed, child: Text(title)),

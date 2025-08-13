@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/home/home.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  bool _isPasswordVisible = false;
 
   @override
   void dispose() {
@@ -36,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             Text(
               'River Flow Solutions',
-              style: textTheme.headlineSmall?.copyWith(
+              style: textTheme.headlineMedium?.copyWith(
                 fontWeight: FontWeight.bold,
                 color: RFXColors.lightPrimary,
               ),
@@ -47,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
             Text(
               'Style clip effect union underline. Editor auto bullet select fill select create draft. Pen list effect.',
             ),
+            const SizedBox(height: RFXSpacing.spacing32),
             Form(
               key: _emailFormKey,
               child: RFXTextFormField(
@@ -54,7 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Email',
                 hintText: 'Enter your email',
                 validator: _valilidateEmail,
-                initialValue: 'ngocduc@gmail.com',
+                initialValue: "ngocduc@gmail.com",
               ),
             ),
             const SizedBox(height: RFXSpacing.spacing12),
@@ -65,13 +71,53 @@ class _LoginPageState extends State<LoginPage> {
                 labelText: 'Password',
                 hintText: 'Enter your password',
                 validator: _validatePassword,
-                initialValue: '1234',
+                obscureText: !_isPasswordVisible,
+                suffixIcon: IconButton(
+                  padding: EdgeInsets.zero,
+                  icon: Icon(
+                    _isPasswordVisible ? Iconsax.eye : Iconsax.eye_slash,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible;
+                    });
+                  },
+                ),
+                initialValue: "1234",
+              ),
+            ),
+            const SizedBox(height: RFXSpacing.spacing12),
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                'Forgot Password?',
+                textAlign: TextAlign.end,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: RFXColors.lightPrimary,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: RFXSpacing.spacing20),
+            SizedBox(
+              width: double.infinity,
+              child: RFXPrimaryButton.large(
+                title: 'Login',
+                onPressed: _onLoginPressed,
               ),
             ),
           ],
         ),
       ),
     );
+  }
+
+  void _onLoginPressed() {
+    FocusScope.of(context).unfocus();
+    if (_emailFormKey.currentState!.validate() &&
+        _passwordFormKey.currentState!.validate()) {
+      context.goNamed(HomePage.routeName);
+    }
   }
 
   String? _valilidateEmail(String? value) {
