@@ -13,7 +13,8 @@ class ProductionServiceLocator {
   Future<void> setup() async {
     getIt
       ..registerFactory(() => SplashCubit())
-      ..registerFactory(() => TourCubit(tourRepository: TourRepository()));
+      ..registerLazySingleton(TourRepository.new)
+      ..registerFactory(() => TourCubit(tourRepository: getIt()));
   }
 }
 

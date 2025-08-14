@@ -35,14 +35,19 @@ class BottomNavigationShellPage extends StatelessWidget {
             label: 'Home',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Iconsax.search_favorite),
+            icon: Icon(Iconsax.search_favorite_copy),
+            label: 'Explore',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Iconsax.notification),
+            icon: Icon(Iconsax.notification_copy),
+            label: 'Tell Me',
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Iconsax.user_octagon),
             icon: Icon(Iconsax.user_octagon_copy),
             label: 'Profile',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Iconsax.monitor),
-            icon: Icon(Iconsax.monitor_copy),
-            label: 'Monitor',
           ),
         ],
       ),

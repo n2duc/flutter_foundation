@@ -6,7 +6,8 @@ import 'package:logging/logging.dart';
 part 'tour_cubit.freezed.dart';
 
 class TourCubit extends Cubit<TourState> {
-  TourCubit({required this.tourRepository}) : super(const TourState.loading());
+  TourCubit({required this.tourRepository})
+    : super(const TourState.idle(listEvent: [], listTour: []));
 
   static final log = Logger('TourCubit');
 
@@ -14,14 +15,40 @@ class TourCubit extends Cubit<TourState> {
   final TourRepository tourRepository;
 
   Future<void> load() async {
+    emit(
+      TourState.loading(listEvent: state.listEvent, listTour: state.listTour),
+    );
     try {
-      emit(const TourState.loading());
       final tours = await tourRepository.getTourList();
-      emit(TourState.success(tours: tours));
+      emit(TourState.success(listTour: tours, listEvent: state.listEvent));
     } catch (error, stackTrace) {
       log.severe('Error while trying to load TourCubit', error, stackTrace);
       emit(
-        const TourState.error(
+        TourState.error(
+          listTour: state.listTour,
+          listEvent: state.listEvent,
+          errorMessage:
+              'Somthing went wrong. Please check your internet connection and try again.',
+        ),
+      );
+    } finally {
+      emit(TourState.idle(listTour: state.listTour));
+    }
+  }
+
+  Future<void> getEventList() async {
+    emit(
+      TourState.loading(listEvent: state.listEvent, listTour: state.listTour),
+    );
+    try {
+      final event = await tourRepository.getEventTour();
+      emit(TourState.success(listEvent: event, listTour: state.listTour));
+    } catch (error, stackTrace) {
+      log.severe('Error while trying to load TourCubit', error, stackTrace);
+      emit(
+        TourState.error(
+          listEvent: state.listEvent,
+          listTour: state.listTour,
           errorMessage:
               'Somthing went wrong. Please check your internet connection and try again.',
         ),
@@ -32,11 +59,24 @@ class TourCubit extends Cubit<TourState> {
 
 @freezed
 sealed class TourState with _$TourState {
-  const factory TourState.loading() = TourStateLoading;
+  const factory TourState.idle({
+    @Default([]) List<Map<String, dynamic>> listTour,
+    @Default([]) List<Map<String, dynamic>> listEvent,
+  }) = AssetIdle;
 
-  const factory TourState.success({required List<TourData> tours}) =
-      TourStateSuccess;
+  const factory TourState.loading({
+    @Default([]) List<Map<String, dynamic>> listTour,
+    @Default([]) List<Map<String, dynamic>> listEvent,
+  }) = TourStateLoading;
 
-  const factory TourState.error({required String errorMessage}) =
-      TourStateError;
+  const factory TourState.success({
+    @Default([]) List<Map<String, dynamic>> listTour,
+    @Default([]) List<Map<String, dynamic>> listEvent,
+  }) = TourStateSuccess;
+
+  const factory TourState.error({
+    @Default([]) List<Map<String, dynamic>> listTour,
+    @Default([]) List<Map<String, dynamic>> listEvent,
+    required String errorMessage,
+  }) = TourStateError;
 }

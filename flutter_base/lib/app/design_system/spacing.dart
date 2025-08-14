@@ -1,5 +1,6 @@
 class RFXSpacing {
   /// Spacing scale (in logical pixels)
+  static const double spacing2 = 2;
   static const double spacing4 = 4;
   static const double spacing6 = 6;
   static const double spacing8 = 8;
@@ -52,6 +53,10 @@ class RFXSpacing {
   static const double spacing184 = 184;
   static const double spacing188 = 188;
   static const double spacing192 = 192;
+  static const double spacing196 = 196;
+  static const double spacing200 = 200;
+  static const double spacing240 = 240;
+  static const double spacing280 = 280;
 
   /// Common spacing aliases for semantic usage
   static const double extraSmall = spacing4;
