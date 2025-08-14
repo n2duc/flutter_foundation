@@ -185,7 +185,7 @@ class _TourCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Card(
-      color: RFXColors.lightOnPrimary,
+      elevation: 0,
       child: SizedBox(
         width: RFXSpacing.spacing240,
         child: Column(
@@ -271,7 +271,10 @@ class _TourCard extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(RFXSpacing.spacing12),
+              padding: const EdgeInsets.symmetric(
+                vertical: RFXSpacing.spacing12,
+                horizontal: RFXSpacing.spacing4,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

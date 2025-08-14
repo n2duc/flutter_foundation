@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/auth/auth.dart';
 import 'package:flutter_base/cart/cart.dart';
+import 'package:flutter_base/explore/explore.dart';
+import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/home/home.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
 import 'package:flutter_base/user/user.dart';
@@ -94,6 +96,24 @@ final router = GoRouter(
               name: HomePage.routeName,
               path: '/${HomePage.routeName}',
               builder: (context, state) => const HomePage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/${ExplorePage.routeName}',
+              builder: (context, state) => const ExplorePage(),
+              name: ExplorePage.routeName,
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/${NotificationPage.routeName}',
+              builder: (context, state) => const NotificationPage(),
+              name: NotificationPage.routeName,
             ),
           ],
         ),
