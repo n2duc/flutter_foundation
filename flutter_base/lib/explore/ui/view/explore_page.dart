@@ -15,6 +15,7 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -113,6 +114,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   }).toList(),
                 ),
               ),
+              Text("Suggestion Place", style: textTheme.titleMedium),
             ],
           ),
         ),
