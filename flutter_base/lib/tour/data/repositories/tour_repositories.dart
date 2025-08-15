@@ -5,7 +5,7 @@ class TourRepository {
 
   ///Test data tour
   Future<List<Map<String, dynamic>>> getEventTour() async {
-    await Future.delayed(const Duration(milliseconds: 500));
+    await Future.delayed(const Duration(milliseconds: 300));
     const imagePath = 'assets/images/hanoi.jpg';
     return Future.value([
       {

@@ -32,7 +32,9 @@ class TourCubit extends Cubit<TourState> {
         ),
       );
     } finally {
-      emit(TourState.idle(listTour: state.listTour));
+      emit(
+        TourState.idle(listTour: state.listTour, listEvent: state.listEvent),
+      );
     }
   }
 
@@ -52,6 +54,10 @@ class TourCubit extends Cubit<TourState> {
           errorMessage:
               'Somthing went wrong. Please check your internet connection and try again.',
         ),
+      );
+    } finally {
+      emit(
+        TourState.idle(listTour: state.listTour, listEvent: state.listEvent),
       );
     }
   }

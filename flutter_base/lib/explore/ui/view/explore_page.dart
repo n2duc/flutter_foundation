@@ -109,7 +109,7 @@ class _ExplorePageState extends State<ExplorePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: PlaceType.values.map((item) {
-                    return _PlaceTypeItem(item: item);
+                    return PlaceTypeItem(item: item);
                   }).toList(),
                 ),
               ),
@@ -117,34 +117,6 @@ class _ExplorePageState extends State<ExplorePage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _PlaceTypeItem extends StatelessWidget {
-  const _PlaceTypeItem({required this.item});
-
-  final PlaceType item;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(RFXSpacing.spacing14),
-          decoration: BoxDecoration(
-            color: RFXColors.lightPrimary.withValues(alpha: 0.1),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(
-            item.getIcon(),
-            size: RFXSpacing.spacing24,
-            color: RFXColors.lightPrimary,
-          ),
-        ),
-        const SizedBox(height: RFXSpacing.spacing8),
-        Text(item.getName(), style: Theme.of(context).textTheme.bodySmall),
-      ],
     );
   }
 }
