@@ -1,5 +1,3 @@
-import 'package:flutter_base/tour/tour.dart';
-
 class TourRepository {
   TourRepository();
 
@@ -94,55 +92,4 @@ class TourRepository {
       },
     ]);
   }
-
-  List<TourEventData> tourEventList = [
-    TourEventData(
-      id: 1,
-      title: 'Cultural Festival',
-      description: 'Cultural Festival',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 2,
-      title: 'Food Festival',
-      description: 'Food Festival',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 3,
-      title: 'Music Festival',
-      description: 'Music Festival',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 4,
-      title: 'Art Exhibition',
-      description: 'Art Exhibition',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 5,
-      title: 'Historical Tour',
-      description: 'Historical Tour',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 6,
-      title: 'Adventure Tour',
-      description: 'Adventure Tour',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 7,
-      title: 'Nature Tour',
-      description: 'Nature Tour',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-    TourEventData(
-      id: 8,
-      title: 'Wildlife Tour',
-      description: 'Wildlife Tour',
-      imgPath: 'assets/images/hanoi.jpg',
-    ),
-  ];
 }

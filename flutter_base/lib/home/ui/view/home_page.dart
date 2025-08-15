@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/cart/cart.dart';
@@ -114,11 +112,14 @@ class _HomePageState extends State<HomePage> {
                   }
                   return SizedBox(
                     height: 400,
-                    child: ListView.builder(
+                    child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: tours.length,
                       itemBuilder: (context, index) {
                         return TourCard(tour: tours[index]);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(width: RFXSpacing.spacing12);
                       },
                     ),
                   );
