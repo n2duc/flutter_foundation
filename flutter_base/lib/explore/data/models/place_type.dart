@@ -29,4 +29,21 @@ extension PlaceTypeExtension on PlaceType {
         return Iconsax.home_1;
     }
   }
+
+  void navigate(BuildContext context) {
+    switch (this) {
+      case PlaceType.explore:
+        //Next page explore
+        break;
+      case PlaceType.sailing:
+        //Next page sailing
+        break;
+      case PlaceType.kayaking:
+        //Next page kayaking
+        break;
+      case PlaceType.cottage:
+        //Next page cottage
+        break;
+    }
+  }
 }
