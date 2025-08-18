@@ -43,7 +43,12 @@ class _ExplorePageState extends State<ExplorePage> {
                       height: RFXSpacing.spacing200,
                       decoration: BoxDecoration(
                         color: RFXColors.lightPrimary,
-                        image: DecorationImage(image: AssetImage('assets/images/hoian.jpg'), fit: BoxFit.cover, alignment: Alignment.center, opacity: 0.6),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/hoian.jpg'),
+                          fit: BoxFit.cover,
+                          alignment: Alignment.center,
+                          opacity: 0.6,
+                        ),
                       ),
                       child: Center(
                         child: Column(
@@ -51,11 +56,19 @@ class _ExplorePageState extends State<ExplorePage> {
                           children: [
                             Text(
                               'Choose Your Adventure',
-                              style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+                              style: Theme.of(context).textTheme.headlineSmall
+                                  ?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                             SizedBox(height: RFXSpacing.spacing4),
-                            Text('Discover new places and experiences', style: Theme.of(context).textTheme.titleSmall?.copyWith(color: Colors.white)),
-                            const SizedBox(height: RFXSpacing.spacing32),
+                            Text(
+                              'Discover new places and experiences',
+                              style: Theme.of(context).textTheme.titleSmall
+                                  ?.copyWith(color: Colors.white),
+                            ),
+                            const SizedBox(height: RFXSpacing.spacing40),
                           ],
                         ),
                       ),
@@ -67,13 +80,24 @@ class _ExplorePageState extends State<ExplorePage> {
                 // PreferredSize is a widget that sizes its child to a specific size.
                 preferredSize: Size.fromHeight(RFXSpacing.spacing24),
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: RFXSpacing.spacing16, left: RFXSpacing.spacing28, right: RFXSpacing.spacing28),
+                  padding: const EdgeInsets.only(
+                    bottom: RFXSpacing.spacing16,
+                    left: RFXSpacing.spacing28,
+                    right: RFXSpacing.spacing28,
+                  ),
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.86,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(RFXSpacing.spacing32),
-                      boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, spreadRadius: 2, offset: Offset(0, 5))],
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                          spreadRadius: 2,
+                          offset: Offset(0, 5),
+                        ),
+                      ],
                     ),
                     child: TextField(
                       textAlignVertical: TextAlignVertical.center,
@@ -81,9 +105,16 @@ class _ExplorePageState extends State<ExplorePage> {
                       decoration: InputDecoration(
                         hintText: 'Search Your Destination',
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: RFXSpacing.spacing20, vertical: RFXSpacing.spacing12),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: RFXSpacing.spacing20,
+                          vertical: RFXSpacing.spacing12,
+                        ),
                         suffixIcon: IconButton(
-                          icon: Icon(Iconsax.search_normal_1_copy, color: RFXColors.lightPrimary, size: RFXSpacing.spacing18),
+                          icon: Icon(
+                            Iconsax.search_normal_1_copy,
+                            color: RFXColors.lightPrimary,
+                            size: RFXSpacing.spacing18,
+                          ),
                           onPressed: () {
                             // Handle search action
                           },
@@ -101,7 +132,9 @@ class _ExplorePageState extends State<ExplorePage> {
                 children: [
                   const SizedBox(height: RFXSpacing.small),
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: RFXSpacing.small),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: RFXSpacing.small,
+                    ),
                     child: LayoutBuilder(
                       builder: (context, constraints) {
                         final rowWidth = constraints.maxWidth;
@@ -112,7 +145,10 @@ class _ExplorePageState extends State<ExplorePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             ...PlaceType.values.map((item) {
-                              return PlaceTypeItem(item: item, maxWidth: (rowWidth / length) - spacing);
+                              return PlaceTypeItem(
+                                item: item,
+                                maxWidth: (rowWidth / length) - spacing,
+                              );
                             }),
                           ],
                         );
@@ -120,14 +156,24 @@ class _ExplorePageState extends State<ExplorePage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: RFXSpacing.spacing28, vertical: RFXSpacing.small),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: RFXSpacing.spacing28,
+                      vertical: RFXSpacing.small,
+                    ),
                     child: Text(
                       "Suggestion Place",
-                      style: textTheme.titleMedium?.copyWith(color: RFXColors.lightPrimary, fontWeight: FontWeight.w600),
+                      style: textTheme.titleMedium?.copyWith(
+                        color: RFXColors.lightPrimary,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
 
-                  BlocSelector<ExploreCubit, ExploreState, List<Map<String, dynamic>>>(
+                  BlocSelector<
+                    ExploreCubit,
+                    ExploreState,
+                    List<Map<String, dynamic>>
+                  >(
                     bloc: _bloc,
                     selector: (state) {
                       if (state is ExploreStateSuccess) {
@@ -143,7 +189,10 @@ class _ExplorePageState extends State<ExplorePage> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: places.length,
-                        separatorBuilder: (_, __) => const Divider(color: RFXColors.lightOutlineVariant, height: 1),
+                        separatorBuilder: (_, __) => const Divider(
+                          color: RFXColors.lightOutlineVariant,
+                          height: 1,
+                        ),
                         itemBuilder: (context, index) {
                           final place = places[index];
                           return PlaceCard(place: place);

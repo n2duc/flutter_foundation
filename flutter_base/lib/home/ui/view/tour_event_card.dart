@@ -12,22 +12,32 @@ class TourEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: Card(
+        elevation: 0,
         margin: EdgeInsets.zero,
         shape: const RoundedRectangleBorder(
           side: BorderSide.none, //
-          borderRadius: BorderRadius.all(Radius.circular(0)),
+          borderRadius: BorderRadius.all(Radius.circular(RFXSpacing.small)),
         ),
+        color: RFXColors.lightOnPrimary,
         child: InkWell(
           onTap: onTap,
+          borderRadius: BorderRadius.circular(RFXSpacing.small),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: RFXSpacing.spacing6, vertical: RFXSpacing.spacing6),
+            padding: const EdgeInsets.symmetric(
+              horizontal: RFXSpacing.spacing6,
+              vertical: RFXSpacing.spacing6,
+            ),
             child: Row(
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(RFXSpacing.spacing6),
-                  child: Image.asset(event['imgPath']!, width: RFXSpacing.spacing52, fit: BoxFit.cover),
+                  child: Image.asset(
+                    event['imgPath']!,
+                    width: RFXSpacing.spacing52,
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                const SizedBox(width: RFXSpacing.spacing8),
+                const SizedBox(width: RFXSpacing.small),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,

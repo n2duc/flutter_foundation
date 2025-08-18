@@ -20,7 +20,7 @@ class RFXCard extends StatelessWidget {
     Color? backgroundColor,
     this.cornerRadius,
   }) : backgroundColor = backgroundColor ?? Colors.white,
-       borderColor = RFXColors.darkPrimary,
+       borderColor = RFXColors.lightPrimary,
        elevation = 0,
        shadowColor = null;
 

@@ -42,115 +42,210 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: RFXColors.lightPrimary,
         foregroundColor: RFXColors.lightOnPrimary,
-        title: Text('Home Page', style: textTheme.titleLarge?.copyWith(color: RFXColors.lightOnPrimary)),
-        actions: [IconButton(onPressed: () => context.pushNamed(CartPage.routeName), icon: const Icon(Iconsax.shopping_cart))],
+        title: Text(
+          'Home Page',
+          style: textTheme.titleLarge?.copyWith(
+            color: RFXColors.lightOnPrimary,
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () => context.pushNamed(CartPage.routeName),
+            icon: const Icon(Iconsax.shopping_cart),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(RFXSpacing.spacing16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Where ever you go, \nIt\'s Beautiful Place', style: textTheme.headlineMedium?.copyWith(color: RFXColors.lightPrimary)),
-              const SizedBox(height: RFXSpacing.spacing20),
-              Text('This is the main content area.', style: textTheme.bodyMedium),
-              SizedBox(
-                height: RFXSpacing.spacing60,
-                child: ValueListenableBuilder(
-                  valueListenable: _selectedCategory,
-                  builder: (context, currentSelected, _) {
-                    return ListView.builder(
-                      itemCount: CategoryType.values.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        final item = CategoryType.values[index];
-                        final isSelected = item == currentSelected;
-                        return Row(
-                          children: [
-                            CategoryItem(
-                              item: item,
-                              isSelected: isSelected,
-                              onTap: () {
-                                _selectedCategory.value = item;
-                              },
-                            ),
-                            if (index < CategoryType.values.length - 1) const SizedBox(width: RFXSpacing.small),
-                          ],
-                        );
-                      },
-                    );
-                  },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: RFXSpacing.spacing16,
+                vertical: RFXSpacing.spacing16,
+              ),
+              child: Text(
+                'Where ever you go, \nIt\'s Beautiful Place',
+                style: textTheme.headlineMedium?.copyWith(
+                  color: RFXColors.lightPrimary,
                 ),
               ),
-              const SizedBox(height: RFXSpacing.spacing20),
-              // Tour List Section
-              BlocSelector<TourCubit, TourState, List<Map<String, dynamic>>>(
-                bloc: _tourBloc,
-                selector: (state) => (state.listTour),
-                builder: (context, tours) {
-                  if (tours.isEmpty) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  return SizedBox(
-                    height: 400,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: tours.length,
-                      itemBuilder: (context, index) {
-                        return TourCard(tour: tours[index]);
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(width: RFXSpacing.spacing12);
-                      },
-                    ),
+            ),
+            SizedBox(
+              height: RFXSpacing.spacing40,
+              child: ValueListenableBuilder(
+                valueListenable: _selectedCategory,
+                builder: (context, currentSelected, _) {
+                  return ListView.separated(
+                    itemCount: CategoryType.values.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final item = CategoryType.values[index];
+                      final isSelected = item == currentSelected;
+
+                      if (index == 0) {
+                        return Padding(
+                          padding: EdgeInsets.only(left: RFXSpacing.spacing16),
+                          child: CategoryItem(
+                            item: item,
+                            isSelected: isSelected,
+                            onTap: () {
+                              _selectedCategory.value = item;
+                            },
+                          ),
+                        );
+                      }
+
+                      if (index == CategoryType.values.length - 1) {
+                        return Padding(
+                          padding: EdgeInsets.only(right: RFXSpacing.spacing16),
+                          child: CategoryItem(
+                            item: item,
+                            isSelected: isSelected,
+                            onTap: () {
+                              _selectedCategory.value = item;
+                            },
+                          ),
+                        );
+                      }
+
+                      return CategoryItem(
+                        item: item,
+                        isSelected: isSelected,
+                        onTap: () {
+                          _selectedCategory.value = item;
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: RFXSpacing.spacing12);
+                    },
                   );
                 },
               ),
-              const SizedBox(height: RFXSpacing.spacing20),
-              //Tour Event Section
-              Row(
+            ),
+            const SizedBox(height: RFXSpacing.spacing20),
+            // Tour List Section
+            BlocSelector<TourCubit, TourState, List<Map<String, dynamic>>>(
+              bloc: _tourBloc,
+              selector: (state) => (state.listTour),
+              builder: (context, tours) {
+                if (tours.isEmpty) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return SizedBox(
+                  height: 400,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: tours.length,
+                    itemBuilder: (context, index) {
+                      if (index == 0) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            left: RFXSpacing.spacing16,
+                          ),
+                          child: TourCard(tour: tours[index]),
+                        );
+                      }
+                      if (index == tours.length - 1) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            right: RFXSpacing.spacing16,
+                          ),
+                          child: TourCard(tour: tours[index]),
+                        );
+                      }
+                      return TourCard(tour: tours[index]);
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(width: RFXSpacing.spacing12);
+                    },
+                  ),
+                );
+              },
+            ),
+            const SizedBox(height: RFXSpacing.small),
+            //Tour Event Section
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: RFXSpacing.spacing16,
+              ),
+              child: Row(
                 children: [
-                  const SizedBox(width: RFXSpacing.spacing4),
-                  Icon(Iconsax.calendar, color: RFXColors.lightPrimary, size: RFXSpacing.spacing18),
+                  Icon(
+                    Iconsax.calendar,
+                    color: RFXColors.lightPrimary,
+                    size: RFXSpacing.spacing18,
+                  ),
                   const SizedBox(width: RFXSpacing.spacing6),
-                  Text('Tour Events', style: textTheme.titleMedium?.copyWith(fontWeight: FontWeight.w600)),
+                  Text(
+                    'Tour Events',
+                    style: textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ],
               ),
-              const SizedBox(height: RFXSpacing.spacing6),
-              BlocSelector<TourCubit, TourState, List<Map<String, dynamic>>>(
-                bloc: _tourBloc,
-                selector: (state) => (state.listEvent),
-                builder: (context, events) {
-                  if (events.isEmpty) {
-                    return ProgressLoading();
-                  }
-                  return SizedBox(
-                    height: RFXSpacing.spacing144,
+            ),
+            const SizedBox(height: RFXSpacing.spacing6),
+            BlocSelector<TourCubit, TourState, List<Map<String, dynamic>>>(
+              bloc: _tourBloc,
+              selector: (state) => (state.listEvent),
+              builder: (context, events) {
+                if (events.isEmpty) {
+                  return ProgressLoading();
+                }
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: RFXSpacing.spacing16),
+                  child: SizedBox(
+                    height: RFXSpacing.spacing132,
+                    width: double.infinity,
                     child: LayoutBuilder(
                       builder: (context, constraints) {
-                        const columnCount = 2;
-                        final itemWidth = constraints.maxWidth / columnCount - (RFXSpacing.spacing4 * columnCount);
+                        const rowCount = 2;
+                        final itemWidth =
+                            constraints.maxWidth / rowCount -
+                            (RFXSpacing.spacing4 * (rowCount - 1));
                         return GridView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: events.length,
                           padding: EdgeInsets.zero,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2, crossAxisSpacing: RFXSpacing.small, mainAxisSpacing: RFXSpacing.small, mainAxisExtent: itemWidth),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: rowCount,
+                                crossAxisSpacing: RFXSpacing.small,
+                                mainAxisSpacing: RFXSpacing.small,
+                                mainAxisExtent: itemWidth,
+                              ),
                           itemBuilder: (context, index) {
-                            return TourEventCard(
-                              event: events[index],
-                              onTap: () {
-                                //TODO(Duc): Call api and handle next detail event tour page
-                              },
+                            final isLastColumn =
+                                ((events.length / rowCount).ceil() - 1) *
+                                rowCount;
+                            return Padding(
+                              padding: EdgeInsets.only(
+                                right: index >= isLastColumn
+                                    ? RFXSpacing.spacing12
+                                    : 0,
+                                left: index <= rowCount - 1
+                                    ? RFXSpacing.spacing12
+                                    : 0,
+                              ),
+                              child: TourEventCard(
+                                event: events[index],
+                                onTap: () {
+                                  //TODO(Duc): Call api and handle next detail event tour page
+                                },
+                              ),
                             );
                           },
                         );
                       },
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

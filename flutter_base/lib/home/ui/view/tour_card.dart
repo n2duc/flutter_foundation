@@ -27,6 +27,7 @@ class _TourCardState extends State<TourCard> {
     final textTheme = Theme.of(context).textTheme;
     return Card(
       elevation: 0,
+      margin: EdgeInsets.zero,
       child: SizedBox(
         width: RFXSpacing.spacing240,
         child: Column(

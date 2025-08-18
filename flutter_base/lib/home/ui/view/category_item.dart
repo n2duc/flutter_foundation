@@ -22,15 +22,14 @@ class CategoryItem extends StatelessWidget {
     return RFXCard.greyBorder(
       child: InkWell(
         onTap: onTap,
-        splashColor: RFXColors.lightOnSecondary.withValues(alpha: 0.1),
         child: Container(
           decoration: BoxDecoration(
             color: isSelected
                 ? RFXColors.lightPrimary
-                : RFXColors.lightOnPrimary.withValues(alpha: 0.1),
+                : RFXColors.lightPrimary.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(RFXSpacing.medium),
           ),
-          padding: const EdgeInsets.all(RFXSpacing.spacing12),
+          padding: const EdgeInsets.symmetric(horizontal: RFXSpacing.spacing12),
           child: Row(
             children: [
               Icon(
