@@ -125,6 +125,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             const SizedBox(height: RFXSpacing.spacing20),
+            SectionHeading(title: 'Popular Tours', icon: Iconsax.trend_up),
             // Tour List Section
             BlocSelector<TourCubit, TourState, List<Map<String, dynamic>>>(
               bloc: _tourBloc,
@@ -139,23 +140,23 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     itemCount: tours.length,
                     itemBuilder: (context, index) {
-                      if (index == 0) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            left: RFXSpacing.spacing16,
-                          ),
-                          child: TourCard(tour: tours[index]),
-                        );
-                      }
-                      if (index == tours.length - 1) {
-                        return Padding(
-                          padding: const EdgeInsets.only(
-                            right: RFXSpacing.spacing16,
-                          ),
-                          child: TourCard(tour: tours[index]),
-                        );
-                      }
-                      return TourCard(tour: tours[index]);
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          left: index == 0 ? RFXSpacing.spacing16 : 0,
+                          right: index == tours.length - 1
+                              ? RFXSpacing.spacing16
+                              : 0,
+                        ),
+                        child: TourCard(
+                          tour: tours[index],
+                          onTap: () {
+                            context.pushNamed(
+                              TourDetailPage.routeName,
+                              extra: tours[index],
+                            );
+                          },
+                        ),
+                      );
                     },
                     separatorBuilder: (context, index) {
                       return const SizedBox(width: RFXSpacing.spacing12);
@@ -164,30 +165,8 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
-            const SizedBox(height: RFXSpacing.small),
             //Tour Event Section
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: RFXSpacing.spacing16,
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Iconsax.calendar,
-                    color: RFXColors.lightPrimary,
-                    size: RFXSpacing.spacing18,
-                  ),
-                  const SizedBox(width: RFXSpacing.spacing6),
-                  Text(
-                    'Tour Events',
-                    style: textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: RFXSpacing.spacing6),
+            SectionHeading(title: 'Tour Events', icon: Iconsax.calendar_1),
             BlocSelector<TourCubit, TourState, List<Map<String, dynamic>>>(
               bloc: _tourBloc,
               selector: (state) => (state.listEvent),
@@ -219,13 +198,12 @@ class _HomePageState extends State<HomePage> {
                               ),
                           itemBuilder: (context, index) {
                             final isLastColumn =
+                                index >=
                                 ((events.length / rowCount).ceil() - 1) *
-                                rowCount;
+                                    rowCount;
                             return Padding(
                               padding: EdgeInsets.only(
-                                right: index >= isLastColumn
-                                    ? RFXSpacing.spacing12
-                                    : 0,
+                                right: isLastColumn ? RFXSpacing.spacing12 : 0,
                                 left: index <= rowCount - 1
                                     ? RFXSpacing.spacing12
                                     : 0,

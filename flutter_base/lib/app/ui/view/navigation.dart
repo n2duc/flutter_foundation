@@ -5,6 +5,7 @@ import 'package:flutter_base/explore/explore.dart';
 import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/home/home.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
+import 'package:flutter_base/tour/tour.dart';
 import 'package:flutter_base/user/user.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -74,6 +75,12 @@ final router = GoRouter(
       name: CartPage.routeName,
       path: '/${CartPage.routeName}',
       builder: (context, state) => const CartPage(),
+    ),
+    GoRoute(
+      name: TourDetailPage.routeName,
+      path: '/${TourDetailPage.routeName}',
+      builder: (context, state) =>
+          TourDetailPage(tour: state.extra as Map<String, dynamic>),
     ),
     StatefulShellRoute.indexedStack(
       pageBuilder: (context, routerState, navigationShell) {
