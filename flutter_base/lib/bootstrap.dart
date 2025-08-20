@@ -35,7 +35,6 @@ void setupLogging() {
         '${record.level.name}: ${record.loggerName} : ${record.time}: ${record.message}';
     if (record.level < Level.SEVERE) {
       message = messageHeader;
-      // TODO(init): Send to crashlytics
     } else {
       message = '$messageHeader : ${record.error} : ${record.stackTrace}';
     }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/explore/explore.dart';
+import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
 import 'package:flutter_base/tour/tour.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,11 @@ class ProductionServiceLocator {
       ..registerLazySingleton(TourRepository.new)
       ..registerFactory(() => TourCubit(tourRepository: getIt()))
       ..registerLazySingleton(ExploreRepositories.new)
-      ..registerFactory(() => ExploreCubit(exploreRepositories: getIt()));
+      ..registerFactory(() => ExploreCubit(exploreRepositories: getIt()))
+      ..registerLazySingleton(NotificationRepositories.new)
+      ..registerFactory(
+        () => NotificationCubit(notificationRepositories: getIt()),
+      );
   }
 }
 

@@ -90,6 +90,16 @@ class TourRepository {
         "rating": 4.9,
         "imgPath": 'assets/images/hoian.jpg',
       },
+      {
+        "id": 4,
+        "title": 'Phong Nha Cave Tour',
+        "description":
+            'Explore the stunning caves and grottoes of Phong Nha-Ke Bang National Park.',
+        "location": 'Quang Binh, Vietnam',
+        "price": 900000,
+        "rating": 3.0,
+        "imgPath": 'assets/images/hoian.jpg',
+      },
     ]);
   }
 }

@@ -59,7 +59,7 @@ class BottomNavigationShellPage extends StatelessWidget {
 }
 
 final router = GoRouter(
-  initialLocation: '/${HomePage.routeName}',
+  initialLocation: '/${SplashScreenPage.routeName}',
   routes: [
     GoRoute(
       name: SplashScreenPage.routeName,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/cart/cart.dart';
@@ -150,9 +152,13 @@ class _HomePageState extends State<HomePage> {
                         child: TourCard(
                           tour: tours[index],
                           onTap: () {
+                            final encode = Uri.encodeComponent(
+                              jsonEncode(tours[index]),
+                            );
                             context.pushNamed(
                               TourDetailPage.routeName,
                               extra: tours[index],
+                              queryParameters: {'tour': encode},
                             );
                           },
                         ),

@@ -21,6 +21,7 @@ dependencies:
   json_annotation: ^4.9.0
   lottie: ^3.3.1
   meta: ^1.15.0
+  intl: ^0.20.2
 
 dev_dependencies:
   flutter_test:
