@@ -82,6 +82,12 @@ final router = GoRouter(
       builder: (context, state) =>
           TourDetailPage(tour: state.extra as Map<String, dynamic>),
     ),
+    GoRoute(
+      name: DestinationPage.routeName,
+      path: '/${DestinationPage.routeName}',
+      builder: (context, state) =>
+          DestinationPage(destination: state.extra as Map<String, dynamic>),
+    ),
     StatefulShellRoute.indexedStack(
       pageBuilder: (context, routerState, navigationShell) {
         return CustomTransitionPage<void>(

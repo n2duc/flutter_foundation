@@ -41,7 +41,7 @@ class UserPage extends StatelessWidget {
                   horizontal: RFXSpacing.spacing24,
                 ),
                 padding: const EdgeInsets.symmetric(
-                  horizontal: RFXSpacing.spacing24,
+                  horizontal: RFXSpacing.spacing12,
                   vertical: RFXSpacing.spacing20,
                 ),
                 decoration: BoxDecoration(
@@ -57,59 +57,71 @@ class UserPage extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Duc Sucana',
-                              style: textTheme.bodyLarge?.copyWith(
-                                fontWeight: FontWeight.w600,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: RFXSpacing.spacing12,
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Duc Sucana',
+                                style: textTheme.bodyLarge?.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: RFXSpacing.spacing8),
-                            Icon(
-                              Iconsax.verify,
-                              size: RFXSpacing.spacing20,
-                              color: RFXColors.lightPrimary,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: RFXSpacing.spacing12),
-                        Text(
-                          'Bullet editor invite shadow create effect scrolling community shadow',
-                          style: textTheme.bodyMedium,
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                              const SizedBox(width: RFXSpacing.spacing8),
+                              Icon(
+                                Iconsax.verify,
+                                size: RFXSpacing.spacing20,
+                                color: RFXColors.lightPrimary,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: RFXSpacing.spacing12),
+                          Text(
+                            'Bullet editor invite shadow create effect scrolling community shadow',
+                            style: textTheme.bodyMedium,
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(height: RFXSpacing.spacing24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: RFXOutlinedButton.small(
-                            onPressed: () {},
-                            title: 'Edit Profile',
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: RFXSpacing.spacing12,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: RFXOutlinedButton.small(
+                              onPressed: () {},
+                              title: 'Edit Profile',
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: RFXSpacing.spacing20),
-                        Expanded(
-                          child: RFXOutlinedButton.small(
-                            onPressed: () {},
-                            title: 'Verification',
+                          const SizedBox(width: RFXSpacing.spacing20),
+                          Expanded(
+                            child: RFXOutlinedButton.small(
+                              onPressed: () {},
+                              title: 'Verification',
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     const SizedBox(height: RFXSpacing.spacing12),
-                    Column(
-                      children: [
-                        ...MenuType.values.map((menu) {
-                          return MenuItem(menu: menu);
-                        }),
-                      ],
+                    ListView.builder(
+                      itemCount: MenuType.values.length,
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        final menu = MenuType.values[index];
+                        return MenuItem(menu: menu);
+                      },
                     ),
                   ],
                 ),

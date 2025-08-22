@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/explore/explore.dart';
+import 'package:flutter_base/tour/tour.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -133,7 +135,7 @@ class _ExplorePageState extends State<ExplorePage> {
                   const SizedBox(height: RFXSpacing.small),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      vertical: RFXSpacing.small,
+                      vertical: RFXSpacing.medium,
                     ),
                     child: LayoutBuilder(
                       builder: (context, constraints) {
@@ -142,7 +144,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         final length = PlaceType.values.length;
 
                         return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ...PlaceType.values.map((item) {
                               return PlaceTypeItem(
@@ -195,7 +197,15 @@ class _ExplorePageState extends State<ExplorePage> {
                         ),
                         itemBuilder: (context, index) {
                           final place = places[index];
-                          return PlaceCard(place: place);
+                          return PlaceCard(
+                            place: place,
+                            onTap: () {
+                              context.pushNamed(
+                                DestinationPage.routeName,
+                                extra: place,
+                              );
+                            },
+                          );
                         },
                       );
                     },

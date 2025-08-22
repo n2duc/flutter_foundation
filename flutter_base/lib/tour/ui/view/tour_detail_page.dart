@@ -120,7 +120,11 @@ class TourDetailPage extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         height: 100,
-        padding: const EdgeInsets.symmetric(horizontal: RFXSpacing.spacing32),
+        padding: const EdgeInsets.only(
+          left: RFXSpacing.spacing32,
+          bottom: RFXSpacing.spacing16,
+          right: RFXSpacing.spacing32,
+        ),
         decoration: BoxDecoration(
           color: RFXColors.lightPrimary.withValues(alpha: 0.1),
           border: Border(

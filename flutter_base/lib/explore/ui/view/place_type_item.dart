@@ -14,24 +14,34 @@ class PlaceTypeItem extends StatelessWidget {
       children: [
         //Change use Icon button
         Container(
-          decoration: BoxDecoration(color: RFXColors.lightPrimary.withValues(alpha: 0.1), shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            color: RFXColors.lightPrimary.withValues(alpha: 0.1),
+            shape: BoxShape.circle,
+          ),
           child: IconButton(
             padding: const EdgeInsets.all(RFXSpacing.spacing14),
             onPressed: () {
               ///If has api handle extension for PlaceType
               item.navigate(context);
             },
-            icon: Icon(item.getIcon(), size: RFXSpacing.spacing24, color: RFXColors.lightPrimary),
+            icon: Icon(
+              item.getIcon(),
+              size: RFXSpacing.spacing24,
+              color: RFXColors.lightPrimary,
+            ),
             color: RFXColors.lightPrimary.withValues(alpha: 0.1),
           ),
         ),
-    
+
         const SizedBox(height: RFXSpacing.spacing8),
         SizedBox(
           width: maxWidth,
           child: Align(
             alignment: Alignment.center,
-            child: Text(item.getName(), style: Theme.of(context).textTheme.bodySmall),
+            child: Text(
+              item.getName(),
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
           ),
         ),
       ],
