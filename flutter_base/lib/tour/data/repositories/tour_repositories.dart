@@ -102,4 +102,110 @@ class TourRepository {
       },
     ]);
   }
+
+  Future<List<Map<String, dynamic>>> getTourByDestination() async {
+    await Future.delayed(const Duration(milliseconds: 300));
+    return Future.value([
+      {
+        "id": 101,
+        "title": "Mekong Delta Discovery",
+        "description":
+            "Journey through the lush waterways and floating markets of the Mekong Delta.",
+        "location": "Can Tho, Vietnam",
+        "price": 950000,
+        "rating": 4.6,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 102,
+        "title": "Da Lat Flower Gardens",
+        "description":
+            "Explore the vibrant flower gardens and cool climate of Da Lat.",
+        "location": "Da Lat, Vietnam",
+        "price": 700000,
+        "rating": 4.4,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 103,
+        "title": "Hue Imperial City Tour",
+        "description":
+            "Step back in time with a guided tour of the ancient citadel and royal tombs.",
+        "location": "Hue, Vietnam",
+        "price": 850000,
+        "rating": 4.8,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 104,
+        "title": "Nha Trang Beach Escape",
+        "description":
+            "Relax on the sandy beaches and enjoy water sports in Nha Trang.",
+        "location": "Nha Trang, Vietnam",
+        "price": 600000,
+        "rating": 4.3,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 105,
+        "title": "Ban Gioc Waterfall Adventure",
+        "description":
+            "Marvel at the majestic Ban Gioc Waterfall on the border with China.",
+        "location": "Cao Bang, Vietnam",
+        "price": 1100000,
+        "rating": 4.7,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 106,
+        "title": "Con Dao Island Retreat",
+        "description":
+            "Unwind on pristine beaches and explore the history of Con Dao Island.",
+        "location": "Con Dao, Vietnam",
+        "price": 1300000,
+        "rating": 4.9,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 107,
+        "title": "Ba Be Lake Exploration",
+        "description":
+            "Discover the tranquil beauty and ethnic villages around Ba Be Lake.",
+        "location": "Bac Kan, Vietnam",
+        "price": 750000,
+        "rating": 4.2,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 108,
+        "title": "Cat Ba Island Adventure",
+        "description":
+            "Experience kayaking, hiking, and wildlife on Cat Ba Island.",
+        "location": "Hai Phong, Vietnam",
+        "price": 980000,
+        "rating": 4.5,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 109,
+        "title": "Mui Ne Sand Dunes Tour",
+        "description":
+            "Enjoy the unique landscape and activities at the Mui Ne sand dunes.",
+        "location": "Binh Thuan, Vietnam",
+        "price": 650000,
+        "rating": 4.1,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+      {
+        "id": 110,
+        "title": "Saigon City Highlights",
+        "description":
+            "Discover the vibrant culture, history, and cuisine of Ho Chi Minh City.",
+        "location": "Ho Chi Minh City, Vietnam",
+        "price": 500000,
+        "rating": 4.6,
+        "imgPath": "assets/images/hoian.jpg",
+      },
+    ]);
+  }
 }

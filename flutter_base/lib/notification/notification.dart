@@ -1,4 +1,3 @@
-export 'ui/view/avatar_profile.dart';
 export 'ui/view/notification_page.dart';
 export 'ui/view/notification_item.dart';
 export 'ui/cubit/notification_cubit.dart';

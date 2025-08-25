@@ -119,11 +119,10 @@ class TourDetailPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        height: 100,
         padding: const EdgeInsets.only(
-          left: RFXSpacing.spacing32,
-          bottom: RFXSpacing.spacing16,
-          right: RFXSpacing.spacing32,
+          left: RFXSpacing.spacing20,
+          right: RFXSpacing.spacing20,
+          top: RFXSpacing.spacing16,
         ),
         decoration: BoxDecoration(
           color: RFXColors.lightPrimary.withValues(alpha: 0.1),
@@ -134,25 +133,28 @@ class TourDetailPage extends StatelessWidget {
             ),
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Price Place'),
-                Text(
-                  '\$${tour['price']} / day',
-                  style: textTheme.bodyLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+        child: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Column(
+                mainAxisSize:
+                    MainAxisSize.min, // This makes the column size to content
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Price Place'),
+                  Text(
+                    '\$${tour['price']} / day',
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            RFXPrimaryButton.large(onPressed: () {}, title: "Book Now"),
-          ],
+                ],
+              ),
+              RFXPrimaryButton.large(onPressed: () {}, title: "Book Now"),
+            ],
+          ),
         ),
       ),
     );

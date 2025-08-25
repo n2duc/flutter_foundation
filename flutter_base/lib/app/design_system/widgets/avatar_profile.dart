@@ -30,7 +30,7 @@ class AvatarProfile extends StatelessWidget {
               padding: const EdgeInsets.all(RFXSpacing.spacing6),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.lightBlueAccent,
+                color: RFXColors.lightPrimary,
                 border: Border.all(color: RFXColors.lightSurface, width: 3),
               ),
             ),

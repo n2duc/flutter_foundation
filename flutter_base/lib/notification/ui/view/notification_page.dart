@@ -71,7 +71,7 @@ class _NotificationPageState extends State<NotificationPage> {
                 child: Container(
                   height: RFXSpacing.spacing40,
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: RFXColors.lightPrimary,
                     borderRadius: BorderRadius.circular(RFXSpacing.spacing8),
                   ),
                   padding: const EdgeInsets.all(RFXSpacing.spacing2),
@@ -89,7 +89,10 @@ class _NotificationPageState extends State<NotificationPage> {
                       ],
                     ),
                     dividerColor: Colors.transparent,
-                    labelStyle: textTheme.bodyMedium,
+                    labelStyle: textTheme.bodyMedium?.copyWith(
+                      fontWeight: FontWeight.w500,
+                    ),
+                    unselectedLabelColor: Colors.white,
                     tabs: const [
                       Tab(text: 'Notification'),
                       Tab(text: 'Activity'),

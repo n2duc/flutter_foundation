@@ -14,6 +14,7 @@ class MenuItem extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
+        borderRadius: BorderRadius.circular(RFXSpacing.spacing18),
         onTap: () {
           // Handle menu item tap
         },
