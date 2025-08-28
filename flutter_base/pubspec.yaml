@@ -22,6 +22,7 @@ dependencies:
   lottie: ^3.3.1
   meta: ^1.15.0
   intl: ^0.20.2
+  dotted_border: ^3.1.0
 
 dev_dependencies:
   flutter_test:

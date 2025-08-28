@@ -59,6 +59,7 @@ class _DestinationPageState extends State<DestinationPage> {
                         widget.destination['title'],
                         style: textTheme.headlineSmall?.copyWith(
                           fontWeight: FontWeight.bold,
+                          color: RFXColors.lightPrimary,
                         ),
                       ),
                       const SizedBox(height: RFXSpacing.spacing4),
@@ -71,7 +72,7 @@ class _DestinationPageState extends State<DestinationPage> {
                 ),
                 AvatarProfile(
                   avatarUrl:
-                      "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-1/472327597_1940094573068233_1522880513902702645_n.jpg?stp=dst-jpg_s480x480_tt6&_nc_cat=106&ccb=1-7&_nc_sid=e99d92&_nc_ohc=fgsBxplYn64Q7kNvwH4FYi2&_nc_oc=AdkRRuhhJ0dqHhhEiKXvhZDS7AqEuJ-vgcClyxLR8u3RB_p_3lsf0GrXKIM4gaHTWzQ&_nc_zt=24&_nc_ht=scontent.fdad1-2.fna&_nc_gid=GmSdnnB-eFcXASFCxACxDA&oh=00_AfU6dLeP7wBxnDT8SKxzgrcuGOYf1OgpiWCFh2cCoQHzxQ&oe=68AB3732",
+                      "https://cdnphoto.dantri.com.vn/eJdf4Hj7FwFUFPstG0vVi--cJDw=/thumb_w/960/2019/12/20/diem-danh-12-hot-girl-noi-bat-nhat-nam-2019-docx-1576850955802.jpeg",
                 ),
               ],
             ),

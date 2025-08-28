@@ -9,6 +9,16 @@ class TourDetailPage extends StatelessWidget {
   static const routeName = 'tour_detail';
   final Map<String, dynamic> tour;
 
+  void _showBottomSheet(BuildContext context, Map<String, dynamic> tour) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      builder: (context) {
+        return TourBookingSheet(tour: tour);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
@@ -152,7 +162,10 @@ class TourDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-              RFXPrimaryButton.large(onPressed: () {}, title: "Book Now"),
+              RFXPrimaryButton.large(
+                onPressed: () => _showBottomSheet(context, tour),
+                title: "Book Now",
+              ),
             ],
           ),
         ),
