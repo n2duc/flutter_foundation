@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/tour/tour.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class TourDetailPage extends StatelessWidget {
@@ -49,16 +51,40 @@ class TourDetailPage extends StatelessWidget {
             actions: [
               Padding(
                 padding: const EdgeInsets.only(right: RFXSpacing.spacing16),
-                child: Container(
-                  width: RFXSpacing.spacing40,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: RFXColors.lightOnPrimary,
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Iconsax.heart, color: Colors.redAccent),
-                    onPressed: () {},
-                  ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: RFXSpacing.spacing40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: RFXColors.lightOnPrimary,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Iconsax.heart,
+                          color: Colors.redAccent,
+                          size: RFXSpacing.spacing20,
+                        ),
+                        onPressed: () {},
+                      ),
+                    ),
+                    const SizedBox(width: RFXSpacing.spacing12),
+                    Container(
+                      width: RFXSpacing.spacing40,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: RFXColors.lightOnPrimary,
+                      ),
+                      child: IconButton(
+                        icon: const Icon(
+                          Iconsax.shopping_cart,
+                          size: RFXSpacing.spacing20,
+                          color: RFXColors.lightPrimary,
+                        ),
+                        onPressed: () => context.pushNamed(CartPage.routeName),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

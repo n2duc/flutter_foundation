@@ -23,6 +23,7 @@ dependencies:
   meta: ^1.15.0
   intl: ^0.20.2
   dotted_border: ^3.1.0
+  flutter_advanced_switch: ^3.1.0
 
 dev_dependencies:
   flutter_test:
