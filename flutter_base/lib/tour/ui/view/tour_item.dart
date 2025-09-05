@@ -12,7 +12,7 @@ class TourItem extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(
-        horizontal: RFXSpacing.spacing24,
+        horizontal: RFXSpacing.spacing20,
         vertical: RFXSpacing.spacing6,
       ),
       title: Column(
@@ -52,7 +52,8 @@ class TourItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(RFXSpacing.spacing8),
         child: Image.asset(
           tour['imgPath'],
-          width: RFXSpacing.spacing60,
+          width: RFXSpacing.spacing72,
+          height: double.infinity,
           fit: BoxFit.cover,
         ),
       ),

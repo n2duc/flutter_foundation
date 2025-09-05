@@ -88,7 +88,7 @@ class CartItemCard extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
+                    border: Border.all(color: Colors.grey, width: 0.5),
                     borderRadius: BorderRadius.circular(RFXSpacing.spacing8),
                   ),
                   child: ClipRRect(
@@ -153,8 +153,8 @@ class CartItemCard extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(
-                                      width: RFXSpacing.spacing24,
-                                      height: RFXSpacing.spacing24,
+                                      width: RFXSpacing.spacing28,
+                                      height: RFXSpacing.spacing28,
                                       child: IconButton(
                                         iconSize: RFXSpacing.spacing18,
                                         padding: EdgeInsets.zero,
@@ -178,8 +178,8 @@ class CartItemCard extends StatelessWidget {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: RFXSpacing.spacing24,
-                                      height: RFXSpacing.spacing24,
+                                      width: RFXSpacing.spacing28,
+                                      height: RFXSpacing.spacing28,
                                       child: IconButton(
                                         iconSize: RFXSpacing.spacing18,
                                         padding: EdgeInsets.zero,

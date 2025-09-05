@@ -6,3 +6,4 @@ export 'section_heading.dart';
 export 'avatar_profile.dart';
 export 'checkbox.dart';
 export 'cart_button.dart';
+export 'zoom_image_dialog.dart';

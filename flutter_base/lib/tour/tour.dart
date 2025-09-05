@@ -6,3 +6,4 @@ export 'ui/view/tour_item.dart';
 export 'ui/view/tour_booking_sheet.dart';
 export 'ui/cubit/tour_cubit.dart';
 export 'ui/view/rating_stars.dart';
+export 'ui/view/gallery_image.dart';

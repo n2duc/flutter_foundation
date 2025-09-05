@@ -68,7 +68,7 @@ class TourRepository {
         "location": 'Quang Ninh',
         "price": 150000,
         "rating": 4.5,
-        "imgPath": 'assets/images/hoian.jpg',
+        "imgPath": 'assets/images/halong.jpg',
       },
       {
         "id": 2,
@@ -78,7 +78,7 @@ class TourRepository {
         "location": 'Lao Cai, Vietnam',
         "price": 1200000,
         "rating": 4.7,
-        "imgPath": 'assets/images/hoian.jpg',
+        "imgPath": 'assets/images/hagiang.jpg',
       },
       {
         "id": 3,
@@ -98,7 +98,17 @@ class TourRepository {
         "location": 'Quang Binh, Vietnam',
         "price": 900000,
         "rating": 3.0,
-        "imgPath": 'assets/images/hoian.jpg',
+        "imgPath": 'assets/images/saigon.jpg',
+      },
+      {
+        "id": 5,
+        "title": 'Thanh dia My Son',
+        "description":
+            'Explore the stunning temples and ruins of My Son Sanctuary.',
+        "location": 'Quang Nam, Vietnam',
+        "price": 129000,
+        "rating": 5.0,
+        "imgPath": 'assets/images/quangnam.jpg',
       },
     ]);
   }
@@ -114,7 +124,7 @@ class TourRepository {
         "location": "Can Tho, Vietnam",
         "price": 950000,
         "rating": 4.6,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/hagiang.jpg",
       },
       {
         "id": 102,
@@ -124,7 +134,7 @@ class TourRepository {
         "location": "Da Lat, Vietnam",
         "price": 700000,
         "rating": 4.4,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/halong.jpg",
       },
       {
         "id": 103,
@@ -144,7 +154,7 @@ class TourRepository {
         "location": "Nha Trang, Vietnam",
         "price": 600000,
         "rating": 4.3,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/hanoi.jpg",
       },
       {
         "id": 105,
@@ -154,7 +164,7 @@ class TourRepository {
         "location": "Cao Bang, Vietnam",
         "price": 1100000,
         "rating": 4.7,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/ninhbinh.jpg",
       },
       {
         "id": 106,
@@ -164,7 +174,7 @@ class TourRepository {
         "location": "Con Dao, Vietnam",
         "price": 1300000,
         "rating": 4.9,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/quangnam.jpg",
       },
       {
         "id": 107,
@@ -174,7 +184,7 @@ class TourRepository {
         "location": "Bac Kan, Vietnam",
         "price": 750000,
         "rating": 4.2,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/saigon.jpg",
       },
       {
         "id": 108,
@@ -184,7 +194,7 @@ class TourRepository {
         "location": "Hai Phong, Vietnam",
         "price": 980000,
         "rating": 4.5,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/tau.jpg",
       },
       {
         "id": 109,
@@ -194,7 +204,7 @@ class TourRepository {
         "location": "Binh Thuan, Vietnam",
         "price": 650000,
         "rating": 4.1,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/hanoi.jpg",
       },
       {
         "id": 110,
@@ -204,7 +214,7 @@ class TourRepository {
         "location": "Ho Chi Minh City, Vietnam",
         "price": 500000,
         "rating": 4.6,
-        "imgPath": "assets/images/hoian.jpg",
+        "imgPath": "assets/images/hagiang.jpg",
       },
     ]);
   }

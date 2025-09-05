@@ -40,13 +40,19 @@ class _DestinationPageState extends State<DestinationPage> {
             color: RFXColors.lightOnPrimary,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: RFXSpacing.spacing20),
+            child: const CartButton(),
+          ),
+        ],
       ),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(
               vertical: RFXSpacing.spacing12,
-              horizontal: RFXSpacing.spacing24,
+              horizontal: RFXSpacing.spacing20,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

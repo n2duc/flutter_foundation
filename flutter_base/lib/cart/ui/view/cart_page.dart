@@ -4,6 +4,7 @@ import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class CartPage extends StatefulWidget {
@@ -250,7 +251,10 @@ class _CartPageState extends State<CartPage> {
                           const SizedBox(width: RFXSpacing.spacing8),
                           RFXPrimaryButton.small(
                             title: 'Buy now',
-                            onPressed: () {},
+                            onPressed: () {
+                              context.pushNamed(PaymentPage.routeName);
+                            },
+                            disabled: totalPrice <= 0,
                           ),
                         ],
                       ),

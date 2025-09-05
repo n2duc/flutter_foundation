@@ -17,11 +17,36 @@ class ExplorePage extends StatefulWidget {
 
 class _ExplorePageState extends State<ExplorePage> {
   final _bloc = getIt<ExploreCubit>();
+  final _searchController = TextEditingController();
+  String _searchQuery = '';
 
   @override
   void initState() {
     super.initState();
     _bloc.load();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Map<String, dynamic>> _filterPlaces(List<Map<String, dynamic>> places) {
+    if (_searchQuery.isEmpty) {
+      return places;
+    }
+
+    return places.where((place) {
+      final title = place['title']?.toString().toLowerCase() ?? '';
+      final description = place['description']?.toString().toLowerCase() ?? '';
+      final location = place['location']?.toString().toLowerCase() ?? '';
+      final query = _searchQuery.toLowerCase();
+
+      return title.contains(query) ||
+          description.contains(query) ||
+          location.contains(query);
+    }).toList();
   }
 
   @override
@@ -58,17 +83,17 @@ class _ExplorePageState extends State<ExplorePage> {
                           children: [
                             Text(
                               'Choose Your Adventure',
-                              style: Theme.of(context).textTheme.headlineSmall
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                              style: textTheme.headlineSmall?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             SizedBox(height: RFXSpacing.spacing4),
                             Text(
                               'Discover new places and experiences',
-                              style: Theme.of(context).textTheme.titleSmall
-                                  ?.copyWith(color: Colors.white),
+                              style: textTheme.titleSmall?.copyWith(
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(height: RFXSpacing.spacing40),
                           ],
@@ -102,8 +127,14 @@ class _ExplorePageState extends State<ExplorePage> {
                       ],
                     ),
                     child: TextField(
+                      controller: _searchController,
                       textAlignVertical: TextAlignVertical.center,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: textTheme.bodyMedium,
+                      onChanged: (value) {
+                        setState(() {
+                          _searchQuery = value;
+                        });
+                      },
                       decoration: InputDecoration(
                         hintText: 'Search Your Destination',
                         border: InputBorder.none,
@@ -111,16 +142,25 @@ class _ExplorePageState extends State<ExplorePage> {
                           horizontal: RFXSpacing.spacing20,
                           vertical: RFXSpacing.spacing12,
                         ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            Iconsax.search_normal_1_copy,
-                            color: RFXColors.lightPrimary,
-                            size: RFXSpacing.spacing18,
-                          ),
-                          onPressed: () {
-                            // Handle search action
-                          },
-                        ),
+                        suffixIcon: _searchQuery.isNotEmpty
+                            ? IconButton(
+                                icon: Icon(
+                                  Icons.clear,
+                                  color: Colors.grey,
+                                  size: RFXSpacing.spacing18,
+                                ),
+                                onPressed: () {
+                                  _searchController.clear();
+                                  setState(() {
+                                    _searchQuery = '';
+                                  });
+                                },
+                              )
+                            : Icon(
+                                Iconsax.search_normal_1_copy,
+                                color: RFXColors.lightPrimary,
+                                size: RFXSpacing.spacing18,
+                              ),
                       ),
                     ),
                   ),
@@ -163,7 +203,9 @@ class _ExplorePageState extends State<ExplorePage> {
                       vertical: RFXSpacing.small,
                     ),
                     child: Text(
-                      "Suggestion Place",
+                      _searchQuery.isNotEmpty
+                          ? "Search Results"
+                          : "Suggestion Place",
                       style: textTheme.titleMedium?.copyWith(
                         color: RFXColors.lightPrimary,
                         fontWeight: FontWeight.w600,
@@ -187,16 +229,52 @@ class _ExplorePageState extends State<ExplorePage> {
                       if (places.isEmpty) {
                         return const ProgressLoading();
                       }
+
+                      final filteredPlaces = _filterPlaces(places);
+
+                      if (filteredPlaces.isEmpty && _searchQuery.isNotEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.all(RFXSpacing.spacing28),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Icon(
+                                  Iconsax.search_normal_1_copy,
+                                  size: 48,
+                                  color: Colors.grey,
+                                ),
+                                const SizedBox(height: RFXSpacing.spacing16),
+                                Text(
+                                  'No places found for "$_searchQuery"',
+                                  style: textTheme.bodyLarge?.copyWith(
+                                    color: Colors.grey,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: RFXSpacing.spacing8),
+                                Text(
+                                  'Try searching with different keywords',
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    color: Colors.grey,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
+
                       return ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: places.length,
+                        itemCount: filteredPlaces.length,
                         separatorBuilder: (_, __) => const Divider(
                           color: RFXColors.lightOutlineVariant,
                           height: 1,
                         ),
                         itemBuilder: (context, index) {
-                          final place = places[index];
+                          final place = filteredPlaces[index];
                           return PlaceCard(
                             place: place,
                             onTap: () {

@@ -9,6 +9,15 @@ class TourDetailPage extends StatelessWidget {
   static const routeName = 'tour_detail';
   final Map<String, dynamic> tour;
 
+  final List<String> imgPaths = const [
+    'assets/images/hagiang.jpg',
+    'assets/images/halong.jpg',
+    'assets/images/ninhbinh.jpg',
+    'assets/images/quangnam.jpg',
+    'assets/images/saigon.jpg',
+    'assets/images/tau.jpg',
+  ];
+
   void _showBottomSheet(BuildContext context, Map<String, dynamic> tour) {
     showModalBottomSheet(
       context: context,
@@ -22,6 +31,7 @@ class TourDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+    const spacing = RFXSpacing.spacing12;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -32,6 +42,7 @@ class TourDetailPage extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(tour['imgPath']!, fit: BoxFit.cover),
             ),
+            backgroundColor: RFXColors.lightPrimary,
             leading: Padding(
               padding: const EdgeInsets.only(left: RFXSpacing.spacing16),
               child: Container(
@@ -66,7 +77,7 @@ class TourDetailPage extends StatelessWidget {
                         onPressed: () {},
                       ),
                     ),
-                    const SizedBox(width: RFXSpacing.spacing12),
+                    const SizedBox(width: spacing),
                     const CartButton(),
                   ],
                 ),
@@ -75,36 +86,33 @@ class TourDetailPage extends StatelessWidget {
           ),
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: RFXSpacing.spacing20,
-                vertical: RFXSpacing.spacing24,
+              padding: const EdgeInsets.only(
+                right: RFXSpacing.spacing20,
+                left: RFXSpacing.spacing20,
+                top: RFXSpacing.spacing12,
+                bottom: RFXSpacing.spacing20,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    children: [
-                      RatingStars(
-                        rating: tour['rating']!,
-                        starSize: RFXSpacing.spacing20,
-                      ),
-                      const SizedBox(width: RFXSpacing.spacing12),
-                      Text('${tour['rating']}/5.0'),
-                    ],
-                  ),
-                  const SizedBox(height: RFXSpacing.spacing12),
-                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Expanded(
-                        child: Text(
-                          tour['title'],
-                          style: textTheme.titleLarge?.copyWith(
-                            color: RFXColors.lightPrimary,
-                            fontWeight: FontWeight.bold,
+                      Row(
+                        children: [
+                          RatingStars(
+                            rating: tour['rating']!,
+                            starSize: RFXSpacing.spacing20,
                           ),
-                        ),
+                          const SizedBox(width: spacing),
+                          Text(
+                            '${tour['rating']}/5.0',
+                            style: textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
                       ),
                       IconButton(
                         onPressed: () {},
@@ -115,7 +123,15 @@ class TourDetailPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: RFXSpacing.spacing12),
+                  const SizedBox(height: spacing),
+                  Text(
+                    tour['title'],
+                    style: textTheme.titleLarge?.copyWith(
+                      color: RFXColors.lightPrimary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: spacing),
                   Row(
                     children: [
                       const Icon(
@@ -135,6 +151,8 @@ class TourDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: RFXSpacing.spacing6),
                   Text(tour['description'], style: textTheme.bodyMedium),
+                  const SizedBox(height: spacing),
+                  GalleryImage(imgPaths: imgPaths),
                 ],
               ),
             ),

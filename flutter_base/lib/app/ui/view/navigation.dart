@@ -73,11 +73,6 @@ final router = GoRouter(
       builder: (context, state) => const LoginPage(),
     ),
     GoRoute(
-      name: CartPage.routeName,
-      path: '/${CartPage.routeName}',
-      builder: (context, state) => const CartPage(),
-    ),
-    GoRoute(
       name: TourDetailPage.routeName,
       path: '/${TourDetailPage.routeName}',
       builder: (context, state) =>
@@ -88,6 +83,16 @@ final router = GoRouter(
       path: '/${DestinationPage.routeName}',
       builder: (context, state) =>
           DestinationPage(destination: state.extra as Map<String, dynamic>),
+    ),
+    GoRoute(
+      name: CartPage.routeName,
+      path: '/${CartPage.routeName}',
+      builder: (context, state) => const CartPage(),
+    ),
+    GoRoute(
+      name: PaymentPage.routeName,
+      path: '/${PaymentPage.routeName}',
+      builder: (context, state) => const PaymentPage(),
     ),
     StatefulShellRoute.indexedStack(
       pageBuilder: (context, routerState, navigationShell) {
