@@ -26,6 +26,10 @@ class _CartPageState extends State<CartPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(0.5),
+          child: Container(color: Colors.grey.shade300, height: 0.5),
+        ),
         title: BlocSelector<CartCubit, CartState, int>(
           bloc: _bloc,
           selector: (state) => state.cartTours.length,

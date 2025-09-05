@@ -148,11 +148,11 @@ class TourDetailPage extends StatelessWidget {
           top: RFXSpacing.spacing16,
         ),
         decoration: BoxDecoration(
-          color: RFXColors.lightPrimary.withValues(alpha: 0.1),
+          color: RFXColors.lightOnPrimary,
           border: Border(
             top: BorderSide(
               color: RFXColors.lightPrimary.withValues(alpha: 0.1),
-              width: RFXSpacing.spacing2,
+              width: 1,
             ),
           ),
         ),
