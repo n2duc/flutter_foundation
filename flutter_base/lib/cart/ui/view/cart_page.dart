@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/cart/cart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class CartPage extends StatefulWidget {
@@ -15,30 +18,38 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   final _isUseCoin = ValueNotifier<bool>(false);
 
+  final _bloc = getIt<CartCubit>();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Shopping cart',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: RFXColors.lightPrimary,
-              ),
-            ),
-            Text(
-              ' (0)',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-                color: RFXColors.lightPrimary,
-              ),
-            ),
-          ],
+        title: BlocSelector<CartCubit, CartState, int>(
+          bloc: _bloc,
+          selector: (state) => state.cartTours.length,
+          builder: (context, cartCount) {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Shopping cart',
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: RFXColors.lightPrimary,
+                  ),
+                ),
+                Text(
+                  ' ($cartCount)',
+                  style: textTheme.titleMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: RFXColors.lightPrimary,
+                  ),
+                ),
+              ],
+            );
+          },
         ),
         leading: IconButton(
           icon: const Icon(
@@ -61,11 +72,40 @@ class _CartPageState extends State<CartPage> {
         ],
         centerTitle: true,
         backgroundColor: Colors.white,
+        elevation: 0,
+        scrolledUnderElevation: 0,
+        surfaceTintColor: Colors.transparent,
       ),
       body: Container(
         decoration: BoxDecoration(color: Colors.grey.shade200),
-        padding: EdgeInsets.all(RFXSpacing.spacing12),
-        child: const Center(child: Text('Your cart is empty')),
+        child: BlocSelector<CartCubit, CartState, List<Map<String, dynamic>>>(
+          bloc: _bloc,
+          selector: (state) => state.cartTours,
+          builder: (context, cartTours) {
+            if (cartTours.isEmpty) {
+              return Center(
+                child: Text(
+                  'Your cart is empty',
+                  style: textTheme.bodyLarge?.copyWith(
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              );
+            }
+            return SlidableAutoCloseBehavior(
+              child: ListView.separated(
+                padding: const EdgeInsets.all(RFXSpacing.spacing12),
+                itemCount: cartTours.length,
+                separatorBuilder: (context, index) =>
+                    const SizedBox(height: RFXSpacing.spacing12),
+                itemBuilder: (context, index) {
+                  final tour = cartTours[index];
+                  return CartItemCard(tour: tour);
+                },
+              ),
+            );
+          },
+        ),
       ),
       bottomNavigationBar: SafeArea(
         child: Column(
@@ -78,7 +118,7 @@ class _CartPageState extends State<CartPage> {
               ),
               decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(color: Colors.grey.shade300, width: 1),
+                  top: BorderSide(color: Colors.grey.shade300, width: 0.5),
                 ),
               ),
               child: Row(
@@ -88,7 +128,8 @@ class _CartPageState extends State<CartPage> {
                     children: [
                       Icon(
                         Iconsax.ticket_discount_copy,
-                        size: RFXSpacing.spacing16,
+                        size: RFXSpacing.spacing18,
+                        color: Colors.redAccent,
                       ),
                       const SizedBox(width: RFXSpacing.spacing6),
                       Text('RFX Voucher'),
@@ -96,11 +137,17 @@ class _CartPageState extends State<CartPage> {
                   ),
                   Row(
                     children: [
-                      Text('Add voucher'),
+                      Text(
+                        'Select or promo code',
+                        style: textTheme.bodyMedium?.copyWith(
+                          color: Colors.grey.shade600,
+                        ),
+                      ),
                       const SizedBox(width: RFXSpacing.spacing6),
                       Icon(
                         Iconsax.arrow_right_3_copy,
-                        size: RFXSpacing.spacing16,
+                        size: RFXSpacing.spacing18,
+                        color: Colors.grey.shade600,
                       ),
                     ],
                   ),
@@ -114,7 +161,7 @@ class _CartPageState extends State<CartPage> {
               ),
               decoration: BoxDecoration(
                 border: Border(
-                  top: BorderSide(color: Colors.grey.shade300, width: 1),
+                  top: BorderSide(color: Colors.grey.shade300, width: 0.5),
                 ),
               ),
               child: Row(
@@ -125,14 +172,16 @@ class _CartPageState extends State<CartPage> {
                     children: [
                       Icon(
                         Iconsax.dollar_circle_copy,
-                        size: RFXSpacing.spacing16,
+                        size: RFXSpacing.spacing18,
+                        color: RFXColors.lightSecondaryFixedDim,
                       ),
                       const SizedBox(width: RFXSpacing.spacing6),
                       Text('Use 10.000 RFX Coin'),
                       const SizedBox(width: RFXSpacing.spacing6),
                       Icon(
                         Iconsax.message_question_copy,
-                        size: RFXSpacing.spacing16,
+                        size: RFXSpacing.spacing18,
+                        color: Colors.grey.shade600,
                       ),
                     ],
                   ),
@@ -144,29 +193,67 @@ class _CartPageState extends State<CartPage> {
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.symmetric(
-                vertical: RFXSpacing.spacing12,
-                horizontal: RFXSpacing.spacing16,
-              ),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(color: Colors.grey.shade300, width: 1),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            BlocSelector<CartCubit, CartState, double>(
+              bloc: _bloc,
+              selector: (state) => state.totalPrice,
+              builder: (context, totalPrice) {
+                return Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: RFXSpacing.spacing12,
+                    horizontal: RFXSpacing.spacing18,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(color: Colors.grey.shade300, width: 0.5),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Checkbox(value: false, onChanged: (value) {}),
-                      const SizedBox(width: RFXSpacing.spacing6),
-                      Text('Select all'),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          BlocSelector<CartCubit, CartState, bool>(
+                            bloc: _bloc,
+                            selector: (state) =>
+                                state.cartTours.isNotEmpty &&
+                                state.cartTours.every(
+                                  (item) => item['isSelected'] == true,
+                                ),
+                            builder: (context, isAllSelected) {
+                              return RFXCheckbox(
+                                value: isAllSelected,
+                                onChanged: () {
+                                  _bloc.toggleAll(!isAllSelected);
+                                },
+                              );
+                            },
+                          ),
+                          const SizedBox(width: RFXSpacing.spacing6),
+                          Text('Select all'),
+                        ],
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            '\$${totalPrice.toStringAsFixed(2)}',
+                            style: textTheme.bodyLarge?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              color: RFXColors.lightPrimary,
+                            ),
+                          ),
+                          const SizedBox(width: RFXSpacing.spacing8),
+                          RFXPrimaryButton.small(
+                            title: 'Buy now',
+                            onPressed: () {},
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                );
+              },
             ),
           ],
         ),

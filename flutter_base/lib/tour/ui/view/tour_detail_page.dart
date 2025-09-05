@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
-import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/tour/tour.dart';
-import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class TourDetailPage extends StatelessWidget {
@@ -69,21 +67,7 @@ class TourDetailPage extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: RFXSpacing.spacing12),
-                    Container(
-                      width: RFXSpacing.spacing40,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: RFXColors.lightOnPrimary,
-                      ),
-                      child: IconButton(
-                        icon: const Icon(
-                          Iconsax.shopping_cart,
-                          size: RFXSpacing.spacing20,
-                          color: RFXColors.lightPrimary,
-                        ),
-                        onPressed: () => context.pushNamed(CartPage.routeName),
-                      ),
-                    ),
+                    const CartButton(),
                   ],
                 ),
               ),
@@ -111,12 +95,15 @@ class TourDetailPage extends StatelessWidget {
                   const SizedBox(height: RFXSpacing.spacing12),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        tour['title'],
-                        style: textTheme.titleLarge?.copyWith(
-                          color: RFXColors.lightPrimary,
-                          fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Text(
+                          tour['title'],
+                          style: textTheme.titleLarge?.copyWith(
+                            color: RFXColors.lightPrimary,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       IconButton(

@@ -15,7 +15,7 @@ class TourEventCard extends StatelessWidget {
         elevation: 0,
         margin: EdgeInsets.zero,
         shape: const RoundedRectangleBorder(
-          side: BorderSide.none, //
+          side: BorderSide.none,
           borderRadius: BorderRadius.all(Radius.circular(RFXSpacing.small)),
         ),
         color: RFXColors.lightOnPrimary,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/explore/explore.dart';
 import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
@@ -22,7 +23,8 @@ class ProductionServiceLocator {
       ..registerLazySingleton(NotificationRepositories.new)
       ..registerFactory(
         () => NotificationCubit(notificationRepositories: getIt()),
-      );
+      )
+      ..registerLazySingleton<CartCubit>(() => CartCubit());
   }
 }
 

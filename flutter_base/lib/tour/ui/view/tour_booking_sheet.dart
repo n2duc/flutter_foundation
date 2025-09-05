@@ -1,6 +1,7 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/cart/cart.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class TourBookingSheet extends StatefulWidget {
@@ -13,7 +14,8 @@ class TourBookingSheet extends StatefulWidget {
 }
 
 class _TourBookingSheetState extends State<TourBookingSheet> {
-  final ValueNotifier<int> _quantityCount = ValueNotifier<int>(0);
+  final ValueNotifier<int> _quantityCount = ValueNotifier<int>(1);
+  final _bloc = getIt<CartCubit>();
 
   @override
   void dispose() {
@@ -26,7 +28,7 @@ class _TourBookingSheetState extends State<TourBookingSheet> {
   }
 
   void decrementQuantity() {
-    if (_quantityCount.value > 0) {
+    if (_quantityCount.value > 1) {
       _quantityCount.value--;
     }
   }
@@ -94,35 +96,46 @@ class _TourBookingSheetState extends State<TourBookingSheet> {
                     borderRadius: BorderRadius.circular(RFXSpacing.spacing8),
                     color: Colors.grey.shade100,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        onPressed: decrementQuantity,
-                        icon: const Icon(
-                          Icons.remove,
-                          size: RFXSpacing.spacing16,
-                        ),
-                      ),
-                      ValueListenableBuilder<int>(
-                        valueListenable: _quantityCount,
-                        builder: (context, value, _) {
-                          return SizedBox(
-                            width: RFXSpacing.spacing40,
-                            child: Center(
-                              child: Text('$value', style: textTheme.bodyLarge),
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: _quantityCount,
+                    builder: (context, value, _) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: value > 1 ? decrementQuantity : null,
+                            icon: const Icon(
+                              Icons.remove,
+                              size: RFXSpacing.spacing16,
                             ),
-                          );
-                        },
-                      ),
-                      IconButton(
-                        onPressed: incrementQuantity,
-                        icon: const Icon(Icons.add, size: RFXSpacing.spacing16),
-                        highlightColor: RFXColors.lightPrimary.withValues(
-                          alpha: 0.2,
-                        ),
-                      ),
-                    ],
+                          ),
+                          ValueListenableBuilder<int>(
+                            valueListenable: _quantityCount,
+                            builder: (context, value, _) {
+                              return SizedBox(
+                                width: RFXSpacing.spacing40,
+                                child: Center(
+                                  child: Text(
+                                    '$value',
+                                    style: textTheme.bodyLarge,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          IconButton(
+                            onPressed: incrementQuantity,
+                            icon: const Icon(
+                              Icons.add,
+                              size: RFXSpacing.spacing16,
+                            ),
+                            highlightColor: RFXColors.lightPrimary.withValues(
+                              alpha: 0.2,
+                            ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],
@@ -166,6 +179,7 @@ class _TourBookingSheetState extends State<TourBookingSheet> {
               child: RFXPrimaryButton.large(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  _bloc.addToCart(widget.tour, count: _quantityCount.value);
                 },
                 title: "Add to cart",
               ),

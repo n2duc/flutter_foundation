@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
-import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/home/home.dart';
 import 'package:flutter_base/tour/tour.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,9 +50,9 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () => context.pushNamed(CartPage.routeName),
-            icon: const Icon(Iconsax.shopping_cart),
+          Padding(
+            padding: const EdgeInsets.only(right: RFXSpacing.spacing16),
+            child: const CartButton(),
           ),
         ],
       ),

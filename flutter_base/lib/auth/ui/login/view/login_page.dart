@@ -116,7 +116,9 @@ class _LoginPageState extends State<LoginPage> {
     FocusScope.of(context).unfocus();
     if (_emailFormKey.currentState!.validate() &&
         _passwordFormKey.currentState!.validate()) {
+      // if (_passwordController.text == "123123") {
       context.goNamed(HomePage.routeName);
+      // }
     }
   }
 
