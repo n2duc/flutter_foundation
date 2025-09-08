@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/cart/cart.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class TourBookingSheet extends StatefulWidget {
@@ -176,12 +177,23 @@ class _TourBookingSheetState extends State<TourBookingSheet> {
             const SizedBox(height: RFXSpacing.spacing16),
             SizedBox(
               width: double.infinity,
-              child: RFXPrimaryButton.large(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  _bloc.addToCart(widget.tour, count: _quantityCount.value);
+              child: BlocBuilder<CartCubit, CartState>(
+                bloc: _bloc,
+                builder: (context, state) {
+                  final isLoading = state is CartStateLoading;
+                  return RFXPrimaryButton.large(
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                            Navigator.of(context).pop();
+                            _bloc.addToCart(
+                              widget.tour,
+                              count: _quantityCount.value,
+                            );
+                          },
+                    title: isLoading ? "Adding..." : "Add to cart",
+                  );
                 },
-                title: "Add to cart",
               ),
             ),
           ],

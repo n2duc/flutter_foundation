@@ -142,12 +142,10 @@ class CartItemCard extends StatelessWidget {
                             ),
                             BlocSelector<CartCubit, CartState, int>(
                               bloc: _bloc,
-                              selector: (state) =>
-                                  state.cartTours.firstWhere(
-                                        (item) => item['id'] == tour['id'],
-                                        orElse: () => {},
-                                      )['count']
-                                      as int,
+                              selector: (state) => state.cartTours.firstWhere(
+                                (item) => item['id'] == tour['id'],
+                                orElse: () => {},
+                              )['count'],
                               builder: (context, count) {
                                 return Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
