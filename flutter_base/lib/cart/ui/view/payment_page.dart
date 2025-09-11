@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/cart/cart.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class PaymentPage extends StatelessWidget {
@@ -10,6 +11,7 @@ class PaymentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -302,6 +304,7 @@ class PaymentPage extends StatelessWidget {
                       Text('**** **** **** 1234', style: textTheme.bodySmall),
                     ],
                   ),
+                  PaymentMethodRadio(),
                 ],
               ),
             ),
