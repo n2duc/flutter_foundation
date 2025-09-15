@@ -226,16 +226,25 @@ class _CartPageState extends State<CartPage> {
                                   (item) => item['isSelected'] == true,
                                 ),
                             builder: (context, isAllSelected) {
-                              return RFXCheckbox(
-                                value: isAllSelected,
-                                onChanged: () {
+                              return InkWell(
+                                onTap: () {
                                   _bloc.toggleAll(!isAllSelected);
                                 },
+                                child: Row(
+                                  children: [
+                                    RFXCheckbox(
+                                      value: isAllSelected,
+                                      onChanged: () {
+                                        _bloc.toggleAll(!isAllSelected);
+                                      },
+                                    ),
+                                    const SizedBox(width: RFXSpacing.spacing6),
+                                    Text('Select all'),
+                                  ],
+                                ),
                               );
                             },
                           ),
-                          const SizedBox(width: RFXSpacing.spacing6),
-                          Text('Select all'),
                         ],
                       ),
                       Row(
