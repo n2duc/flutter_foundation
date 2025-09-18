@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/auth/auth.dart';
 import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/explore/explore.dart';
+import 'package:flutter_base/message/message.dart';
 import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/home/home.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
@@ -93,6 +94,11 @@ final router = GoRouter(
       name: PaymentPage.routeName,
       path: '/${PaymentPage.routeName}',
       builder: (context, state) => const PaymentPage(),
+    ),
+    GoRoute(
+      name: MesssagePage.routeName,
+      path: '/${MesssagePage.routeName}',
+      builder: (context, state) => const MesssagePage(),
     ),
     StatefulShellRoute.indexedStack(
       pageBuilder: (context, routerState, navigationShell) {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/cart/cart.dart';
+import 'package:flutter_base/message/message.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
@@ -71,7 +72,7 @@ class _CartPageState extends State<CartPage> {
             padding: const EdgeInsets.only(right: RFXSpacing.spacing12),
             child: IconButton(
               icon: const Icon(Iconsax.message, color: RFXColors.lightPrimary),
-              onPressed: () {},
+              onPressed: () => context.pushNamed(MesssagePage.routeName),
             ),
           ),
         ],
