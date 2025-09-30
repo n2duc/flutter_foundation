@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/explore/explore.dart';
+import 'package:flutter_base/message/message.dart';
 import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
 import 'package:flutter_base/tour/tour.dart';
@@ -24,6 +25,8 @@ class ProductionServiceLocator {
       ..registerFactory(
         () => NotificationCubit(notificationRepositories: getIt()),
       )
+      ..registerLazySingleton(MessageRepositories.new)
+      ..registerFactory(() => MessageCubit(messageRepositories: getIt()))
       ..registerLazySingleton<CartCubit>(() => CartCubit());
   }
 }
