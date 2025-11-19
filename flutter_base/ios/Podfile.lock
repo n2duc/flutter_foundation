@@ -53,12 +53,15 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (5.0.0)
+  - image_picker_ios (0.0.1):
+    - Flutter
   - RecaptchaInterop (101.0.0)
 
 DEPENDENCIES:
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -80,11 +83,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_core/ios"
   Flutter:
     :path: Flutter
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
 
 SPEC CHECKSUMS:
   Firebase: 26f6f8d460603af3df970ad505b16b15f5e2e9a1
-  firebase_auth: 9270662fd9824ff308da6b16a118f70a7f91fc81
-  firebase_core: 3b9065a1037f7f2e360077d2aa5fb6ec9adb3005
+  firebase_auth: 9c0ce237c3bdc34c85fec8b87575beda143adba0
+  firebase_core: 3ff52146406557dddd01d570e807e203ec7e1302
   FirebaseAppCheckInterop: a1b2598c64c5a8c42fd6f6a1c3d0938ae4324678
   FirebaseAuth: 059c11702bdb759bb49b6c7ec6ff67abf21f39c4
   FirebaseAuthInterop: 217702acd4cc6baa98ba9d6c054532e0de0b8a16
@@ -94,6 +99,7 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   GTMSessionFetcher: 02d6e866e90bc236f48a703a041dfe43e6221a29
+  image_picker_ios: e0ece4aa2a75771a7de3fa735d26d90817041326
   RecaptchaInterop: 11e0b637842dfb48308d242afc3f448062325aba
 
 PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e

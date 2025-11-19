@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_base/user/user.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 enum MenuType { profile, payment, lang, privacy, setting }
@@ -49,23 +51,19 @@ extension MenuTypeExtension on MenuType {
     }
   }
 
-  void navigate(BuildContext context) {
+  String? get routeName {
     switch (this) {
-      case MenuType.profile:
-        // Navigate to profile page
-        break;
-      case MenuType.payment:
-        // Navigate to payment methods page
-        break;
-      case MenuType.lang:
-        // Navigate to language settings page
-        break;
-      case MenuType.privacy:
-        // Navigate to privacy settings page
-        break;
       case MenuType.setting:
-        // Navigate to app settings page
-        break;
+        return SettingsPage.routeName;
+      default:
+        return null;
+    }
+  }
+
+  void navigate(BuildContext context) {
+    final route = routeName;
+    if (route != null) {
+      context.pushNamed(route);
     }
   }
 }

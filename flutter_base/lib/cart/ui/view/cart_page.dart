@@ -72,7 +72,7 @@ class _CartPageState extends State<CartPage> {
             padding: const EdgeInsets.only(right: RFXSpacing.spacing12),
             child: IconButton(
               icon: const Icon(Iconsax.message, color: RFXColors.lightPrimary),
-              onPressed: () => context.pushNamed(MesssagePage.routeName),
+              onPressed: () => context.pushNamed(MessagePage.routeName),
             ),
           ),
         ],

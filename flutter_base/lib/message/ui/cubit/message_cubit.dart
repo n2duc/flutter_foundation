@@ -58,6 +58,7 @@ class MessageCubit extends Cubit<MessageState> {
       'isMine': true,
       'timestamp': DateTime.now(),
       'status': 'sending',
+      'type': 'text',
     };
 
     emit(
@@ -101,6 +102,51 @@ class MessageCubit extends Cubit<MessageState> {
     });
   }
 
+  void sendImage(String path) {
+    final currentState = state;
+    if (currentState is! MessageStateSuccess) {
+      return;
+    }
+
+    final messageId = 'local-${DateTime.now().millisecondsSinceEpoch}';
+    final newMessage = <String, dynamic>{
+      'id': messageId,
+      'text': path,
+      'isMine': true,
+      'timestamp': DateTime.now(),
+      'status': 'sending',
+      'type': 'image',
+    };
+
+    emit(
+      currentState.copyWith(
+        messages: List<Map<String, dynamic>>.from(currentState.messages)
+          ..add(newMessage),
+      ),
+    );
+
+    Future<void>.delayed(const Duration(milliseconds: 450)).then((_) {
+      final latestState = state;
+      if (isClosed || latestState is! MessageStateSuccess) {
+        return;
+      }
+
+      final updatedMessages = List<Map<String, dynamic>>.from(
+        latestState.messages,
+      );
+      final index = updatedMessages.indexWhere(
+        (message) => message['id'] == messageId,
+      );
+      if (index == -1) {
+        return;
+      }
+
+      updatedMessages[index] = {...updatedMessages[index], 'status': 'sent'};
+
+      emit(latestState.copyWith(messages: updatedMessages));
+    });
+  }
+
   void receiveMessage({required String message, bool markOnline = true}) {
     final currentState = state;
     if (currentState is! MessageStateSuccess) {
@@ -113,6 +159,7 @@ class MessageCubit extends Cubit<MessageState> {
       'isMine': false,
       'timestamp': DateTime.now(),
       'status': 'sent',
+      'type': 'text',
     };
 
     emit(

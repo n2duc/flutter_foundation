@@ -16,7 +16,7 @@ class MenuItem extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(RFXSpacing.spacing18),
         onTap: () {
-          // Handle menu item tap
+          menu.navigate(context);
         },
         child: Padding(
           padding: const EdgeInsets.all(RFXSpacing.spacing12),

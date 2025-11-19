@@ -23,6 +23,7 @@ class MessageRepositories {
           'isMine': false,
           'timestamp': now.subtract(const Duration(minutes: 42)),
           'status': 'read',
+          'type': 'text',
         },
         {
           'id': 'message-2',
@@ -31,6 +32,7 @@ class MessageRepositories {
           'isMine': true,
           'timestamp': now.subtract(const Duration(minutes: 39)),
           'status': 'read',
+          'type': 'text',
         },
         {
           'id': 'message-3',
@@ -38,6 +40,7 @@ class MessageRepositories {
           'isMine': false,
           'timestamp': now.subtract(const Duration(minutes: 33)),
           'status': 'read',
+          'type': 'text',
         },
         {
           'id': 'message-4',
@@ -45,6 +48,7 @@ class MessageRepositories {
           'isMine': true,
           'timestamp': now.subtract(const Duration(minutes: 27)),
           'status': 'read',
+          'type': 'text',
         },
         {
           'id': 'message-5',
@@ -53,6 +57,7 @@ class MessageRepositories {
           'isMine': false,
           'timestamp': now.subtract(const Duration(minutes: 18)),
           'status': 'delivered',
+          'type': 'text',
         },
         {
           'id': 'message-6',
@@ -60,6 +65,7 @@ class MessageRepositories {
           'isMine': true,
           'timestamp': now.subtract(const Duration(minutes: 14)),
           'status': 'sent',
+          'type': 'text',
         },
         {
           'id': 'message-7',
@@ -67,6 +73,7 @@ class MessageRepositories {
           'isMine': false,
           'timestamp': now.subtract(const Duration(minutes: 8)),
           'status': 'sent',
+          'type': 'text',
         },
       ],
     };

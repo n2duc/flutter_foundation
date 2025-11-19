@@ -96,9 +96,14 @@ final router = GoRouter(
       builder: (context, state) => const PaymentPage(),
     ),
     GoRoute(
-      name: MesssagePage.routeName,
-      path: '/${MesssagePage.routeName}',
-      builder: (context, state) => const MesssagePage(),
+      name: MessagePage.routeName,
+      path: '/${MessagePage.routeName}',
+      builder: (context, state) => const MessagePage(),
+    ),
+    GoRoute(
+      name: SettingsPage.routeName,
+      path: '/${SettingsPage.routeName}',
+      builder: (context, state) => const SettingsPage(),
     ),
     StatefulShellRoute.indexedStack(
       pageBuilder: (context, routerState, navigationShell) {

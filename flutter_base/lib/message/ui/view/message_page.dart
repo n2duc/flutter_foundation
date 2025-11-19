@@ -1,20 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/message/ui/cubit/message_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-class MesssagePage extends StatefulWidget {
-  const MesssagePage({super.key});
+class MessagePage extends StatefulWidget {
+  const MessagePage({super.key});
 
   static const routeName = 'message';
 
   @override
-  State<MesssagePage> createState() => _MesssagePageState();
+  State<MessagePage> createState() => _MessagePageState();
 }
 
-class _MesssagePageState extends State<MesssagePage> {
+class _MessagePageState extends State<MessagePage> {
   late final MessageCubit _bloc;
   late final TextEditingController _messageController;
   late final ScrollController _scrollController;
@@ -44,6 +47,15 @@ class _MesssagePageState extends State<MesssagePage> {
     _bloc.sendMessage(text);
     _messageController.clear();
     FocusScope.of(context).unfocus();
+  }
+
+  Future<void> _handleImageSelection(ImageSource source) async {
+    final picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: source);
+
+    if (image != null) {
+      _bloc.sendImage(image.path);
+    }
   }
 
   void _scrollToBottom() {
@@ -304,11 +316,15 @@ class _MesssagePageState extends State<MesssagePage> {
             ),
             const SizedBox(width: RFXSpacing.spacing12),
             IconButton(
-              onPressed: enabled ? () {} : null,
+              onPressed: enabled
+                  ? () => _handleImageSelection(ImageSource.camera)
+                  : null,
               icon: const Icon(Iconsax.camera_copy),
             ),
             IconButton(
-              onPressed: enabled ? () {} : null,
+              onPressed: enabled
+                  ? () => _handleImageSelection(ImageSource.gallery)
+                  : null,
               icon: const Icon(Iconsax.image_copy),
             ),
             const SizedBox(width: RFXSpacing.spacing4),
@@ -472,13 +488,34 @@ class _MessageBubble extends StatelessWidget {
             : CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            message['text'] as String? ?? '',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: textColor,
-              height: 1.4,
-            ),
-          ),
+            message['type'] == 'image'
+                ? ClipRRect(
+                    borderRadius: BorderRadius.circular(RFXSpacing.spacing12),
+                    child: Image.file(
+                      File(message['text'] as String),
+                      height: 200,
+                      width: 200,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          height: 200,
+                          width: 200,
+                          color: RFXColors.lightSurfaceContainerHigh,
+                          child: const Icon(
+                            Iconsax.image_copy,
+                            color: RFXColors.lightOnSurfaceVariant,
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                : Text(
+                    message['text'] as String? ?? '',
+                    style: theme.textTheme.bodyMedium?.copyWith(
+                      color: textColor,
+                      height: 1.4,
+                    ),
+                  ),
           const SizedBox(height: RFXSpacing.spacing6),
           Row(
             mainAxisSize: MainAxisSize.min,
