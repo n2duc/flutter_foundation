@@ -66,4 +66,12 @@ class RFXSpacing {
   static const double medium = spacing24;
   static const double large = spacing32;
   static const double extraLarge = spacing48;
+
+  /// Breakpoint responsive
+  static const double xs = spacing4;
+  static const double sm = spacing8;
+  static const double md = spacing12;
+  static const double lg = spacing16;
+  static const double xl = spacing20;
+  static const double xxl = spacing24;
 }

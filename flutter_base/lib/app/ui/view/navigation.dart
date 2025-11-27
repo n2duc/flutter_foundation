@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/auth/auth.dart';
 import 'package:flutter_base/cart/cart.dart';
+import 'package:flutter_base/example/example.dart';
 import 'package:flutter_base/explore/explore.dart';
 import 'package:flutter_base/message/message.dart';
 import 'package:flutter_base/notification/notification.dart';
@@ -104,6 +105,21 @@ final router = GoRouter(
       name: SettingsPage.routeName,
       path: '/${SettingsPage.routeName}',
       builder: (context, state) => const SettingsPage(),
+    ),
+    GoRoute(
+      name: ExamplePage.routeName,
+      path: '/${ExamplePage.routeName}',
+      builder: (context, state) => const ExamplePage(),
+      routes: [
+        GoRoute(
+          name: ProductDetailPage.routeName,
+          path: ':id',
+          builder: (context, state) {
+            final id = double.parse(state.pathParameters['id']!);
+            return ProductDetailPage(productId: id);
+          },
+        ),
+      ],
     ),
     StatefulShellRoute.indexedStack(
       pageBuilder: (context, routerState, navigationShell) {

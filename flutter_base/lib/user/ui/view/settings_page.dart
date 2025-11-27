@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/user/user.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -34,7 +35,7 @@ class SettingsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(RFXSpacing.spacing16),
         children: [
-          _buildSectionHeader(context, 'General'),
+          SectionHeader(title: 'General'),
           _buildSwitchTile(
             context,
             title: 'Notifications',
@@ -50,13 +51,14 @@ class SettingsPage extends StatelessWidget {
             onChanged: (value) {},
           ),
           const SizedBox(height: RFXSpacing.spacing24),
-          _buildSectionHeader(context, 'Account'),
+          SectionHeader(title: 'Account'),
           _buildActionTile(
             context,
             title: 'Change Password',
             icon: Iconsax.lock,
             onTap: () {},
           ),
+          const SizedBox(height: RFXSpacing.spacing12),
           _buildActionTile(
             context,
             title: 'Logout',
@@ -65,22 +67,6 @@ class SettingsPage extends StatelessWidget {
             onTap: () {},
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSectionHeader(BuildContext context, String title) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        bottom: RFXSpacing.spacing12,
-        left: RFXSpacing.spacing12,
-      ),
-      child: Text(
-        title,
-        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-          color: RFXColors.lightPrimary,
-          fontWeight: FontWeight.bold,
-        ),
       ),
     );
   }
@@ -120,7 +106,7 @@ class SettingsPage extends StatelessWidget {
             color: RFXColors.lightOnSurfaceVariant,
           ),
         ),
-        activeColor: RFXColors.lightPrimary,
+        activeThumbColor: RFXColors.lightPrimary,
       ),
     );
   }
@@ -136,10 +122,7 @@ class SettingsPage extends StatelessWidget {
     final effectiveColor = color ?? RFXColors.lightOnSurface;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: RFXSpacing.spacing12),
       decoration: BoxDecoration(
-        color: RFXColors.lightOnPrimary,
-        borderRadius: BorderRadius.circular(RFXSpacing.spacing16),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),
@@ -148,27 +131,46 @@ class SettingsPage extends StatelessWidget {
           ),
         ],
       ),
-      child: ListTile(
-        onTap: onTap,
-        leading: Container(
-          padding: const EdgeInsets.all(RFXSpacing.spacing8),
-          decoration: BoxDecoration(
-            color: effectiveColor.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(RFXSpacing.spacing12),
+      child: Material(
+        borderRadius: BorderRadius.circular(RFXSpacing.spacing18),
+        color: Colors.white,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(RFXSpacing.spacing18),
+          splashColor: effectiveColor.withValues(alpha: 0.1),
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(RFXSpacing.spacing16),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(RFXSpacing.spacing8),
+                  decoration: BoxDecoration(
+                    color: effectiveColor.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(RFXSpacing.spacing12),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: effectiveColor,
+                    size: RFXSpacing.spacing20,
+                  ),
+                ),
+                const SizedBox(width: RFXSpacing.spacing12),
+                Text(
+                  title,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: effectiveColor,
+                  ),
+                ),
+                const Spacer(),
+                Icon(
+                  Iconsax.arrow_right_2,
+                  size: RFXSpacing.spacing16,
+                  color: effectiveColor.withValues(alpha: 0.5),
+                ),
+              ],
+            ),
           ),
-          child: Icon(icon, color: effectiveColor, size: RFXSpacing.spacing20),
-        ),
-        title: Text(
-          title,
-          style: theme.textTheme.bodyMedium?.copyWith(
-            fontWeight: FontWeight.w600,
-            color: effectiveColor,
-          ),
-        ),
-        trailing: Icon(
-          Iconsax.arrow_right_2,
-          size: RFXSpacing.spacing16,
-          color: effectiveColor.withValues(alpha: 0.5),
         ),
       ),
     );

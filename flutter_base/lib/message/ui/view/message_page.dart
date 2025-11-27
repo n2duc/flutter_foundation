@@ -65,8 +65,8 @@ class _MessagePageState extends State<MessagePage> {
       }
       _scrollController.animateTo(
         _scrollController.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 280),
-        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOutCubic,
       );
     });
   }
@@ -136,15 +136,18 @@ class _MessagePageState extends State<MessagePage> {
       titleSpacing: 0,
       title: Row(
         children: [
-          CircleAvatar(
-            radius: RFXSpacing.spacing20,
-            backgroundColor: RFXColors.lightPrimary.withValues(alpha: 0.1),
-            backgroundImage: avatarUrl.isNotEmpty
-                ? NetworkImage(avatarUrl)
-                : null,
-            child: avatarUrl.isEmpty
-                ? const Icon(Iconsax.user, color: RFXColors.lightPrimary)
-                : null,
+          Hero(
+            tag: 'message_avatar',
+            child: CircleAvatar(
+              radius: RFXSpacing.spacing20,
+              backgroundColor: RFXColors.lightPrimary.withValues(alpha: 0.1),
+              backgroundImage: avatarUrl.isNotEmpty
+                  ? NetworkImage(avatarUrl)
+                  : null,
+              child: avatarUrl.isEmpty
+                  ? const Icon(Iconsax.user, color: RFXColors.lightPrimary)
+                  : null,
+            ),
           ),
           const SizedBox(width: RFXSpacing.spacing12),
           Column(
@@ -159,10 +162,14 @@ class _MessagePageState extends State<MessagePage> {
                 ),
               ),
               const SizedBox(height: RFXSpacing.spacing4),
-              Text(
-                subtitle,
-                style: theme.textTheme.bodySmall?.copyWith(
-                  color: subtitleColor,
+              AnimatedSwitcher(
+                duration: const Duration(milliseconds: 300),
+                child: Text(
+                  subtitle,
+                  key: ValueKey(subtitle),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: subtitleColor,
+                  ),
                 ),
               ),
             ],
@@ -179,9 +186,7 @@ class _MessagePageState extends State<MessagePage> {
 
   Widget _buildBody(MessageState state) {
     if (state is MessageStateLoading) {
-      return const Center(
-        child: CircularProgressIndicator(color: RFXColors.lightPrimary),
-      );
+      return const _BuildShimmerLoading();
     }
 
     if (state is MessageStateError) {
@@ -203,64 +208,77 @@ class _MessagePageState extends State<MessagePage> {
     final dateFormat = DateFormat('EEEE, MMM d');
     final timeFormat = DateFormat('HH:mm');
 
-    return ListView.builder(
-      controller: _scrollController,
-      padding: const EdgeInsets.fromLTRB(
-        RFXSpacing.spacing16,
-        RFXSpacing.spacing16,
-        RFXSpacing.spacing16,
-        RFXSpacing.spacing96,
-      ),
-      physics: const BouncingScrollPhysics(),
-      itemCount: state.messages.length,
-      itemBuilder: (context, index) {
-        final message = state.messages[index];
-        final timestamp = message['timestamp'] as DateTime;
-        final showDateLabel =
-            index == 0 ||
-            !_isSameDay(
-              timestamp,
-              state.messages[index - 1]['timestamp'] as DateTime,
-            );
+    return RefreshIndicator(
+      onRefresh: _bloc.loadConversation,
+      color: RFXColors.lightPrimary,
+      child: ListView.builder(
+        controller: _scrollController,
+        padding: const EdgeInsets.fromLTRB(
+          RFXSpacing.spacing16,
+          RFXSpacing.spacing16,
+          RFXSpacing.spacing16,
+          RFXSpacing.spacing96,
+        ),
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        itemCount: state.messages.length,
+        itemBuilder: (context, index) {
+          final message = state.messages[index];
+          final timestamp = message['timestamp'] as DateTime;
+          final showDateLabel =
+              index == 0 ||
+              !_isSameDay(
+                timestamp,
+                state.messages[index - 1]['timestamp'] as DateTime,
+              );
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (showDateLabel)
-              Padding(
-                padding: const EdgeInsets.only(bottom: RFXSpacing.spacing12),
-                child: Center(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: RFXSpacing.spacing16,
-                      vertical: RFXSpacing.spacing6,
+          return _AnimatedMessageItem(
+            index: index,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (showDateLabel)
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: RFXSpacing.spacing12,
                     ),
-                    decoration: BoxDecoration(
-                      color: RFXColors.lightPrimary.withValues(alpha: 0.08),
-                      borderRadius: BorderRadius.circular(RFXSpacing.spacing24),
-                    ),
-                    child: Text(
-                      dateFormat.format(timestamp),
-                      style: textTheme.bodySmall?.copyWith(
-                        color: RFXColors.lightPrimary,
-                        fontWeight: FontWeight.w500,
+                    child: Center(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: RFXSpacing.spacing16,
+                          vertical: RFXSpacing.spacing6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: RFXColors.lightPrimary.withValues(alpha: 0.08),
+                          borderRadius: BorderRadius.circular(
+                            RFXSpacing.spacing24,
+                          ),
+                        ),
+                        child: Text(
+                          dateFormat.format(timestamp),
+                          style: textTheme.bodySmall?.copyWith(
+                            color: RFXColors.lightPrimary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
                       ),
                     ),
                   ),
+                Align(
+                  alignment: (message['isMine'] as bool? ?? false)
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  child: _MessageBubble(
+                    message: message,
+                    timeLabel: timeFormat.format(timestamp),
+                  ),
                 ),
-              ),
-            Align(
-              alignment: (message['isMine'] as bool? ?? false)
-                  ? Alignment.centerRight
-                  : Alignment.centerLeft,
-              child: _MessageBubble(
-                message: message,
-                timeLabel: timeFormat.format(timestamp),
-              ),
+              ],
             ),
-          ],
-        );
-      },
+          );
+        },
+      ),
     );
   }
 
@@ -341,7 +359,7 @@ class _MessagePageState extends State<MessagePage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: RFXSpacing.spacing32),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             const Icon(
               Iconsax.info_circle_copy,
@@ -376,33 +394,51 @@ class _MessagePageState extends State<MessagePage> {
   Widget _buildEmptyState(Map<String, dynamic> contact) {
     final textTheme = Theme.of(context).textTheme;
     final name = contact['name'] as String? ?? 'your travel buddy';
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: RFXSpacing.spacing32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(
-              Iconsax.messages_2_copy,
-              size: RFXSpacing.spacing40,
-              color: RFXColors.lightPrimary,
+    return RefreshIndicator(
+      onRefresh: _bloc.loadConversation,
+      color: RFXColors.lightPrimary,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
             ),
-            const SizedBox(height: RFXSpacing.spacing12),
-            Text(
-              'Start something good',
-              style: textTheme.titleMedium?.copyWith(
-                fontWeight: FontWeight.w600,
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: RFXSpacing.spacing32,
+                  ),
+                  child: Column(
+                    mainAxisSize: .min,
+                    children: [
+                      const Icon(
+                        Iconsax.messages_2_copy,
+                        size: RFXSpacing.spacing40,
+                        color: RFXColors.lightPrimary,
+                      ),
+                      const SizedBox(height: RFXSpacing.spacing12),
+                      Text(
+                        'Start something good',
+                        style: textTheme.titleMedium?.copyWith(
+                          fontWeight: .w600,
+                        ),
+                        textAlign: .center,
+                      ),
+                      const SizedBox(height: RFXSpacing.spacing8),
+                      Text(
+                        'Say hello to $name and plan the journey together.',
+                        style: textTheme.bodyMedium,
+                        textAlign: .center,
+                      ),
+                    ],
+                  ),
+                ),
               ),
-              textAlign: TextAlign.center,
             ),
-            const SizedBox(height: RFXSpacing.spacing8),
-            Text(
-              'Say hello to $name and plan the journey together.',
-              style: textTheme.bodyMedium,
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }
@@ -431,6 +467,94 @@ class _MessagePageState extends State<MessagePage> {
       return 'Last seen ${difference.inHours}h ago';
     }
     return 'Last seen on ${DateFormat('MMM d').format(lastSeen)}';
+  }
+}
+
+class _AnimatedMessageItem extends StatelessWidget {
+  const _AnimatedMessageItem({required this.child, required this.index});
+
+  final Widget child;
+  final int index;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0, end: 1),
+      duration: const Duration(milliseconds: 400),
+      curve: Curves.easeOutQuad,
+      builder: (context, value, child) {
+        return Transform.translate(
+          offset: Offset(0, 20 * (1 - value)),
+          child: Opacity(opacity: value, child: child),
+        );
+      },
+      child: child,
+    );
+  }
+}
+
+class _BuildShimmerLoading extends StatefulWidget {
+  const _BuildShimmerLoading();
+
+  @override
+  State<_BuildShimmerLoading> createState() => _BuildShimmerLoadingState();
+}
+
+class _BuildShimmerLoadingState extends State<_BuildShimmerLoading>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500),
+    )..repeat();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return ListView.builder(
+          padding: const EdgeInsets.all(RFXSpacing.spacing16),
+          itemCount: 8,
+          itemBuilder: (context, index) {
+            final isRight = index % 2 == 0;
+            return Align(
+              alignment: isRight ? Alignment.centerRight : Alignment.centerLeft,
+              child: Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                width: MediaQuery.of(context).size.width * 0.6,
+                height: 60 + (index % 3) * 20.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [
+                      RFXColors.lightSurfaceContainerHigh,
+                      RFXColors.lightSurfaceContainerHighest,
+                      RFXColors.lightSurfaceContainerHigh,
+                    ],
+                    stops: const [0.1, 0.5, 0.9],
+                    begin: Alignment(-1.0 + (_controller.value * 2), 0),
+                    end: Alignment(1.0 + (_controller.value * 2), 0),
+                    tileMode: TileMode.clamp,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
 
@@ -488,34 +612,34 @@ class _MessageBubble extends StatelessWidget {
             : CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-            message['type'] == 'image'
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(RFXSpacing.spacing12),
-                    child: Image.file(
-                      File(message['text'] as String),
-                      height: 200,
-                      width: 200,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          height: 200,
-                          width: 200,
-                          color: RFXColors.lightSurfaceContainerHigh,
-                          child: const Icon(
-                            Iconsax.image_copy,
-                            color: RFXColors.lightOnSurfaceVariant,
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                : Text(
-                    message['text'] as String? ?? '',
-                    style: theme.textTheme.bodyMedium?.copyWith(
-                      color: textColor,
-                      height: 1.4,
-                    ),
+          message['type'] == 'image'
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(RFXSpacing.spacing12),
+                  child: Image.file(
+                    File(message['text'] as String),
+                    height: 200,
+                    width: 200,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        height: 200,
+                        width: 200,
+                        color: RFXColors.lightSurfaceContainerHigh,
+                        child: const Icon(
+                          Iconsax.image_copy,
+                          color: RFXColors.lightOnSurfaceVariant,
+                        ),
+                      );
+                    },
                   ),
+                )
+              : Text(
+                  message['text'] as String? ?? '',
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: textColor,
+                    height: 1.4,
+                  ),
+                ),
           const SizedBox(height: RFXSpacing.spacing6),
           Row(
             mainAxisSize: MainAxisSize.min,
@@ -561,32 +685,70 @@ class _MessageBubble extends StatelessWidget {
   }
 }
 
-class _SendButton extends StatelessWidget {
+class _SendButton extends StatefulWidget {
   const _SendButton({required this.enabled, required this.onTap});
 
   final bool enabled;
   final VoidCallback onTap;
 
   @override
+  State<_SendButton> createState() => _SendButtonState();
+}
+
+class _SendButtonState extends State<_SendButton>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 100),
+    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.9,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _handleTap() {
+    if (!widget.enabled) return;
+    _controller.forward().then((_) => _controller.reverse());
+    widget.onTap();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final backgroundColor = enabled
+    final backgroundColor = widget.enabled
         ? RFXColors.lightPrimary
         : RFXColors.lightOutlineVariant;
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: enabled ? onTap : null,
-        borderRadius: BorderRadius.circular(RFXSpacing.spacing28),
-        child: Container(
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: BorderRadius.circular(RFXSpacing.spacing28),
-          ),
-          padding: const EdgeInsets.all(RFXSpacing.spacing12),
-          child: const Icon(
-            Iconsax.send_2,
-            color: RFXColors.lightOnPrimary,
-            size: RFXSpacing.spacing20,
+
+    return ScaleTransition(
+      scale: _scaleAnimation,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: widget.enabled ? _handleTap : null,
+          borderRadius: BorderRadius.circular(RFXSpacing.spacing28),
+          child: Container(
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(RFXSpacing.spacing28),
+            ),
+            padding: const EdgeInsets.all(RFXSpacing.spacing12),
+            child: const Icon(
+              Iconsax.send_2,
+              color: RFXColors.lightOnPrimary,
+              size: RFXSpacing.spacing20,
+            ),
           ),
         ),
       ),

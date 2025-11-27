@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/app/authorization/authorization_interceptor.dart';
 import 'package:flutter_base/cart/cart.dart';
+import 'package:flutter_base/example/example.dart';
 import 'package:flutter_base/explore/explore.dart';
 import 'package:flutter_base/message/message.dart';
 import 'package:flutter_base/notification/notification.dart';
@@ -39,6 +40,7 @@ class ProductionServiceLocator {
       ..registerLazySingleton(ExploreRepositories.new)
       ..registerLazySingleton(NotificationRepositories.new)
       ..registerLazySingleton(MessageRepositories.new)
+      ..registerLazySingleton(ExampleRepositories.new)
       ..registerLazySingleton<CartCubit>(() => CartCubit())
       ..registerFactory(() => SplashCubit())
       ..registerFactory(() => TourCubit(tourRepository: getIt()))
@@ -46,7 +48,9 @@ class ProductionServiceLocator {
       ..registerFactory(
         () => NotificationCubit(notificationRepositories: getIt()),
       )
-      ..registerFactory(() => MessageCubit(messageRepositories: getIt()));
+      ..registerFactory(() => MessageCubit(messageRepositories: getIt()))
+      ..registerFactory(() => ExampleCubit(exampleRepositories: getIt()))
+      ..registerFactory(() => ProductDetailCubit(exampleRepositories: getIt()));
   }
 
   Dio createDio(AuthorizationInterceptor authorization) {

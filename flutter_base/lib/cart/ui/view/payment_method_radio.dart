@@ -40,13 +40,13 @@ class _PaymentMethodRadioState extends State<PaymentMethodRadio> {
             children: [
               Row(
                 children: [
-                  Text('Credit/Debit Card', style: textTheme.bodyMedium),
-                  const SizedBox(width: RFXSpacing.spacing8),
                   Icon(
                     Iconsax.wallet,
                     color: RFXColors.lightPrimary,
                     size: RFXSpacing.spacing20,
                   ),
+                  const SizedBox(width: RFXSpacing.spacing8),
+                  Text('Credit/Debit Card', style: textTheme.bodyMedium),
                 ],
               ),
             ],
@@ -72,13 +72,13 @@ class _PaymentMethodRadioState extends State<PaymentMethodRadio> {
             children: [
               Row(
                 children: [
-                  Text('Paypal', style: textTheme.bodyMedium),
-                  const SizedBox(width: RFXSpacing.spacing8),
                   Icon(
                     Iconsax.paypal,
                     color: RFXColors.lightPrimary,
                     size: RFXSpacing.spacing20,
                   ),
+                  const SizedBox(width: RFXSpacing.spacing8),
+                  Text('Paypal', style: textTheme.bodyMedium),
                 ],
               ),
             ],

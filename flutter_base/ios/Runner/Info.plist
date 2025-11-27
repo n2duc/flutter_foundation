@@ -51,5 +51,16 @@
 	<string>Our app needs access to your camera so you can take photos for your trips or profile.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Our app needs access to your microphone if you intend to record videos with sound.</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.example.flutter_base</string>
+			</array>
+		</dict>
+	</array>
 </dict>
 </plist>
