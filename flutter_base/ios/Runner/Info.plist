@@ -58,7 +58,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.example.flutter_base</string>
+				<string>com.example.rfx-flutter</string>
 			</array>
 		</dict>
 	</array>

@@ -11,6 +11,7 @@ import 'package:flutter_base/tour/tour.dart';
 import 'package:flutter_base/user/user.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:flutter_base/webview_preview/webview_preview.dart';
 
 class BottomNavigationShellPage extends StatelessWidget {
   const BottomNavigationShellPage({super.key, required this.navigationShell});
@@ -53,6 +54,11 @@ class BottomNavigationShellPage extends StatelessWidget {
             selectedIcon: Icon(Iconsax.user_octagon),
             icon: Icon(Iconsax.user_octagon_copy),
             label: 'Profile',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Iconsax.global),
+            icon: Icon(Iconsax.global_copy),
+            label: 'WebView',
           ),
         ],
       ),
@@ -169,6 +175,18 @@ final router = GoRouter(
               path: '/${UserPage.routeName}',
               builder: (context, state) => const UserPage(),
               name: UserPage.routeName,
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/${WebViewPage.routeName}',
+              builder: (context, state) => const WebViewPage(
+                url: 'https://app.triptech.vn',
+                title: 'Triptech',
+              ),
+              name: WebViewPage.routeName,
             ),
           ],
         ),

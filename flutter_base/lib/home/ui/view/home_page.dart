@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
+import 'package:flutter_base/auth/auth.dart';
 import 'package:flutter_base/home/home.dart';
 import 'package:flutter_base/tour/tour.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,6 +51,34 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         actions: [
+          BlocBuilder<AuthCubit, AuthState>(
+            builder: (context, state) {
+              if (state is AuthAuthenticated) {
+                return Row(
+                  children: [
+                    Text(
+                      'Hi, ${state.username}',
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: RFXColors.lightOnPrimary,
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.logout),
+                      onPressed: () {
+                        context.read<AuthCubit>().logout();
+                      },
+                    ),
+                  ],
+                );
+              }
+              return IconButton(
+                icon: const Icon(Icons.login),
+                onPressed: () {
+                  context.read<AuthCubit>().login();
+                },
+              );
+            },
+          ),
           Padding(
             padding: const EdgeInsets.only(right: RFXSpacing.spacing16),
             child: const CartButton(),

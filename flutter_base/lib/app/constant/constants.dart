@@ -4,6 +4,14 @@ class AppConstants {
   Duration get connectTimeout => const Duration(seconds: 30);
 
   Duration get responseTimeOut => const Duration(seconds: 30);
+
+  String get clientId => 'id.ncs-develop.com';
+
+  String get redirectUrl => 'com.example.flutter_base://login-callback';
+
+  String get androidIssuer => 'http://10.0.2.2:8080/realms/ncs-develop';
+
+  String get iosIssuer => 'http://localhost:8080/realms/ncs-develop';
 }
 
 // for stagging

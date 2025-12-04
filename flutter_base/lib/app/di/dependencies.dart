@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_base/app/app.dart';
 import 'package:flutter_base/app/authorization/authorization_interceptor.dart';
+import 'package:flutter_base/auth/auth.dart';
 import 'package:flutter_base/cart/cart.dart';
 import 'package:flutter_base/example/example.dart';
 import 'package:flutter_base/explore/explore.dart';
@@ -20,7 +21,6 @@ class ProductionServiceLocator {
   @mustCallSuper
   Future<void> setup() async {
     final sharedPreferences = SharedPreferencesAsync();
-    getIt.registerSingleton(sharedPreferences);
 
     final localStorageDataSource = LocalStorageDataSource(
       sharedPreferences: getIt(),
@@ -28,6 +28,7 @@ class ProductionServiceLocator {
     await localStorageDataSource.init();
 
     getIt
+      ..registerSingleton(sharedPreferences)
       ..registerSingleton(localStorageDataSource)
       ..registerLazySingleton(
         () => AuthorizationInterceptor(
@@ -41,6 +42,8 @@ class ProductionServiceLocator {
       ..registerLazySingleton(NotificationRepositories.new)
       ..registerLazySingleton(MessageRepositories.new)
       ..registerLazySingleton(ExampleRepositories.new)
+      ..registerLazySingleton(AuthRepository.new)
+      ..registerFactory(() => AuthCubit(authRepository: getIt()))
       ..registerLazySingleton<CartCubit>(() => CartCubit())
       ..registerFactory(() => SplashCubit())
       ..registerFactory(() => TourCubit(tourRepository: getIt()))
