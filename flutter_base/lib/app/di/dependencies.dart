@@ -21,6 +21,7 @@ class ProductionServiceLocator {
   @mustCallSuper
   Future<void> setup() async {
     final sharedPreferences = SharedPreferencesAsync();
+    getIt.registerSingleton(sharedPreferences);
 
     final localStorageDataSource = LocalStorageDataSource(
       sharedPreferences: getIt(),
@@ -28,7 +29,6 @@ class ProductionServiceLocator {
     await localStorageDataSource.init();
 
     getIt
-      ..registerSingleton(sharedPreferences)
       ..registerSingleton(localStorageDataSource)
       ..registerLazySingleton(
         () => AuthorizationInterceptor(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_base/example/example.dart';
+import 'package:flutter_base/product_responsive/ui/view/product_responsive_page.dart';
 import 'package:flutter_base/user/user.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -54,6 +55,8 @@ extension MenuTypeExtension on MenuType {
 
   String? get routeName {
     switch (this) {
+      case MenuType.profile:
+        return ProductResponsivePage.routeName;
       case MenuType.setting:
         return SettingsPage.routeName;
       case MenuType.privacy:

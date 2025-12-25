@@ -6,6 +6,7 @@ import 'package:flutter_base/explore/explore.dart';
 import 'package:flutter_base/message/message.dart';
 import 'package:flutter_base/notification/notification.dart';
 import 'package:flutter_base/home/home.dart';
+import 'package:flutter_base/product_responsive/ui/view/product_responsive_page.dart';
 import 'package:flutter_base/splash_screen/splash_screen.dart';
 import 'package:flutter_base/tour/tour.dart';
 import 'package:flutter_base/user/user.dart';
@@ -113,6 +114,11 @@ final router = GoRouter(
       builder: (context, state) => const SettingsPage(),
     ),
     GoRoute(
+      name: ProductResponsivePage.routeName,
+      path: '/${ProductResponsivePage.routeName}',
+      builder: (context, state) => const ProductResponsivePage(),
+    ),
+    GoRoute(
       name: ExamplePage.routeName,
       path: '/${ExamplePage.routeName}',
       builder: (context, state) => const ExamplePage(),
@@ -183,7 +189,7 @@ final router = GoRouter(
             GoRoute(
               path: '/${WebViewPage.routeName}',
               builder: (context, state) => const WebViewPage(
-                url: 'https://app.triptech.vn',
+                url: 'https://rc.neucares.com/app.html',
                 title: 'Triptech',
               ),
               name: WebViewPage.routeName,
